@@ -13,7 +13,7 @@
     <uses-feature android:name="android.hardware.bluetooth" android:required="true" />
 
     <application
-        android:label="dsc Crew"
+        android:label="DSC Crew"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

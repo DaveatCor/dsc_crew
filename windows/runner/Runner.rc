@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "mdw_crew" "\0"
+            VALUE "FileDescription", "DSC Crew" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "mdw_crew" "\0"
+            VALUE "InternalName", "DSC Crew" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "mdw_crew.exe" "\0"
-            VALUE "ProductName", "mdw_crew" "\0"
+            VALUE "ProductName", "DSC Crew" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
