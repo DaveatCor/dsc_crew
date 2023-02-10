@@ -185,9 +185,9 @@ class _LoginPageState extends State<LoginPage> {
       
     } else {
 
-      await GetRequest.queryDFMApiJson().then((value) async {
+      await GetRequest.querydscApiJson().then((value) async {
 
-        await StorageServices.storeData (json.decode(value.body), 'dfm_api');
+        await StorageServices.storeData (json.decode(value.body), 'dsc_api');
 
         // Close Dialog Loading
         Navigator.pop(context);

@@ -49,7 +49,7 @@ class CheckoutCount extends StatelessWidget {
                           title!,
                           textAlign: TextAlign.center,
                           textStyle: TextStyle(
-                            fontSize: 30,
+                            fontSize: 25,
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
                           ),

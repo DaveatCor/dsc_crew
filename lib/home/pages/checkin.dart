@@ -28,18 +28,18 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../backend/get_api.dart';
 
 
-class Admission extends StatefulWidget {
+class CheckIn extends StatefulWidget {
 
   final PageController? pageController;
   final String? tabType;
 
-  Admission({super.key, this.pageController, required this.tabType});
+  CheckIn({super.key, this.pageController, required this.tabType});
 
   @override
-  State<Admission> createState() => _AdmissionState();
+  State<CheckIn> createState() => _CheckInState();
 }
 
-class _AdmissionState extends State<Admission> {
+class _CheckInState extends State<CheckIn> {
 
   double iconSize = 35;
 
@@ -152,7 +152,7 @@ class _AdmissionState extends State<Admission> {
         
               Align(
                 alignment: Alignment.topLeft,
-                child: MyText(text: "Admission", fontSize: 25, fontWeight: FontWeight.w600, color2: Colors.blue, ),
+                child: MyText(text: "Check In", fontSize: 25, fontWeight: FontWeight.w600, color2: Colors.blue, ),
               ),
 
               Expanded(
@@ -165,30 +165,30 @@ class _AdmissionState extends State<Admission> {
 
                         Navigator.push(
                           context, 
-                          Transition(child: QrScanner(title: 'The Greatest Artist (${widget.tabType})', func: admissioinFunc, hallId: 'tga',), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
+                          Transition(child: QrScanner(title: '${widget.tabType}', func: admissioinFunc, hallId: 'tga',), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
                         );
 
                       },
-                      title: 'The Greatest Artist',
+                      title: 'Cambodian League Cup 2023',
                       qty: provider.tga.checkIn.toString(),
-                      img: 'tga.png',
+                      img: 'Premium2.png',
                     ),
               
-                    SizedBox(height: 30,),
+                    // SizedBox(height: 30,),
                           
-                    EventCardCom(
-                      func: () async {
+                    // EventCardCom(
+                    //   func: () async {
 
-                        Navigator.push(
-                          context, 
-                          Transition(child: QrScanner(title: 'Van Gogh Alive (${widget.tabType})', func: admissioinFunc, hallId: 'vga',), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
-                        );
+                    //     Navigator.push(
+                    //       context, 
+                    //       Transition(child: QrScanner(title: 'Van Gogh Alive (${widget.tabType})', func: admissioinFunc, hallId: 'vga',), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
+                    //     );
                         
-                      },
-                      title: 'Van Gogh Alive',
-                      qty: provider.vga.checkIn.toString(),
-                      img: 'vga.png',
-                    ),
+                    //   },
+                    //   title: 'Van Gogh Alive',
+                    //   qty: provider.vga.checkIn.toString(),
+                    //   img: 'vga.png',
+                    // ),
                   ],
                 ),
               )

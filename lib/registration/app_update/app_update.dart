@@ -90,7 +90,7 @@ class _AppUpdateState extends State<AppUpdate> {
   Future<void> checkUpdate() async {
 
     // Query and Get Data From Local Storage
-    await StorageServices.fetchData('dfm_api').then((value) async {
+    await StorageServices.fetchData('dsc_api').then((value) async {
       if (value != null){
         
         if (value['app_version'] != "v${widget.appVer}"){
@@ -117,7 +117,7 @@ class _AppUpdateState extends State<AppUpdate> {
 
   Future<void> _downloadApk() async {
 
-    var url = "https://github.com/selendra/dfm_crew/releases/download/${_updateProvider!.newVer}/dfm_crew_${_updateProvider!.newVer}.apk";
+    var url = "https://github.com/selendra/dsc_crew/releases/download/${_updateProvider!.newVer}/dsc_crew_${_updateProvider!.newVer}.apk";
 
     // Dio dio = Dio();
 
@@ -153,14 +153,14 @@ class _AppUpdateState extends State<AppUpdate> {
     //       appDocDir = await getExternalStorageDirectory();
     //       String appDocPath = appDocDir!.path;
 
-    //       // var url = "https://github.com/selendra/dfm_crew/releases/tag/v1.0.2";
+    //       // var url = "https://github.com/selendra/dsc_crew/releases/tag/v1.0.2";
           
     //       // await submitLogin();
     //       // final taskId = await FlutterDownloader.enqueue(
-    //       //   url: 'https://github.com/selendra/dfm_crew/releases/download/${_updateProvider!.newVer}/dfm_crew_${_updateProvider!.newVer}.apk',
+    //       //   url: 'https://github.com/selendra/dsc_crew/releases/download/${_updateProvider!.newVer}/dsc_crew_${_updateProvider!.newVer}.apk',
     //       //   headers: {}, // optional: header send with url (auth token etc)
     //       //   savedDir: appDocPath,
-    //       //   fileName: "dfm_crew_${_updateProvider!.newVer}.apk",
+    //       //   fileName: "dsc_crew_${_updateProvider!.newVer}.apk",
     //       //   showNotification: true, // show download progress in status bar (for Android)
     //       //   openFileFromNotification: true, // click on notification to open downloaded file (for Android)
     //       //   saveInPublicStorage: true

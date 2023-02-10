@@ -246,7 +246,8 @@ Widget bottomAppBar({
 Widget bottomAppBarNoCheck({
   required BuildContext? context,
   required PageController? controller,
-  required int? active
+  required int? active,
+  String? txtColor = "#FFFFFF"
 }){
 
   final double iconSize = 25;
@@ -268,13 +269,13 @@ Widget bottomAppBarNoCheck({
                     child: InkWell(
                       onTap: (){
                       
-                        controller!.animateToPage(0, duration: Duration(milliseconds: 300), curve: Curves.easeOutExpo);
+                        controller!.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeOutExpo);
                       }, 
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                       
-                          Image.asset('assets/icons/admission.png', width: iconSize),
+                          Image.asset('assets/icons/admission.png', width: iconSize, color: Colors.white,),
                       
                           MyText(
                             width: double.maxFinite,
@@ -282,6 +283,7 @@ Widget bottomAppBarNoCheck({
                             text: "Admission",
                             fontSize: 10,
                             bottom: 5,
+                            hexaColor: txtColor!,
                           ),
                         ],
                       )
@@ -292,7 +294,7 @@ Widget bottomAppBarNoCheck({
                   active == 0 ? Container(
                     height: 5,
                     width: double.maxFinite,
-                    color: Colors.blue,
+                    color: Colors.white,
                   ) : Container()
                 ],
               ),
@@ -316,7 +318,7 @@ Widget bottomAppBarNoCheck({
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           
-                          Image.asset('assets/icons/check-out.png', width: iconSize),
+                          Image.asset('assets/icons/check-out.png', width: iconSize, color: Colors.white,),
                           
                           MyText(
                             width: double.maxFinite,
@@ -324,6 +326,7 @@ Widget bottomAppBarNoCheck({
                             text: "Check Out",
                             fontSize: 10,
                             bottom: 5,
+                            hexaColor: txtColor!,
                           ),
                         ],
                       )
@@ -334,8 +337,7 @@ Widget bottomAppBarNoCheck({
                   active == 1 ? Container(
                     height: 5,
                     width: double.maxFinite,
-                    color: Colors.blue,
-                    margin: EdgeInsets.only(bottom: 5),
+                    color: Colors.white,
                   ) : Container()
                 ],
               ),
@@ -390,13 +392,12 @@ Widget bottomAppBarNoCheck({
                           // ),
                           onPressed: () async {
 
-                            Map<String, dynamic> _dfmData = await StorageServices.fetchData('dfm_api');
+                            Map<String, dynamic> _dscData = await StorageServices.fetchData('dsc_api');
 
                             DialogCom().dialogLoading(context, content: "Signing Out");
                             await StorageServices.clearStorage();
 
-
-                            await StorageServices.storeData(_dfmData, 'dfm_api');
+                            await StorageServices.storeData(_dscData, 'dsc_api');
                                             
                             // Dispose Web Socket
                             Provider.of<MDWSocketProvider>(context, listen: false).dispose();
@@ -416,7 +417,7 @@ Widget bottomAppBarNoCheck({
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                   
-                      Image.asset('assets/icons/logout.png', width: iconSize),
+                      Image.asset('assets/icons/logout.png', width: iconSize, color: Colors.white,),
                   
                       MyText(
                         width: double.maxFinite,
@@ -424,6 +425,7 @@ Widget bottomAppBarNoCheck({
                         text: "Log out",
                         fontSize: 10,
                         bottom: 5,
+                        hexaColor: txtColor,
                       ),
                     ],
                   )

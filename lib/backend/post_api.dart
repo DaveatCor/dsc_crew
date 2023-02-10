@@ -11,11 +11,11 @@ class PostRequest {
 
   static Map<String, dynamic>? _tk;
   
-  static Map<String, dynamic>? _dfmApi;
+  static Map<String, dynamic>? _dscApi;
 
   static Future<_http.Response> login(final String email, final String password) async {
   
-    _dfmApi = await StorageServices.fetchData('dfm_api');
+    _dscApi = await StorageServices.fetchData('dsc_api');
     
     _body = json.encode({
       "email": email,
@@ -23,7 +23,7 @@ class PostRequest {
     });
 
     return await _http.post(
-      Uri.parse("${_dfmApi!['LOGIN_API']}login/email"),
+      Uri.parse("${_dscApi!['LOGIN_API']}login/email"),
       headers: conceteHeader(),
       body: _body
     );
@@ -34,7 +34,7 @@ class PostRequest {
     
     _tk = await StorageServices.fetchData(dotenv.get('REGISTRAION'));
     
-    _dfmApi = await StorageServices.fetchData('dfm_api');
+    _dscApi = await StorageServices.fetchData('dsc_api');
     
     _body = json.encode({
       "eventId": '637ff7274903dd71e36fd4e5',//eventId,
@@ -42,7 +42,7 @@ class PostRequest {
     });
 
     return await _http.post(
-      Uri.parse("${_dfmApi!['MDW_API']}admissions/check"),
+      Uri.parse("${_dscApi!['MDW_API']}admissions/check"),
       headers: conceteHeader(key: 'Authorization', value: _tk!['token']),
       body: _body
     );
@@ -53,7 +53,7 @@ class PostRequest {
     
     _tk = await StorageServices.fetchData(dotenv.get('REGISTRAION'));
     
-    _dfmApi = await StorageServices.fetchData('dfm_api');
+    _dscApi = await StorageServices.fetchData('dsc_api');
 
     _body = json.encode({
       "eventId": "637ff7274903dd71e36fd4e5",
@@ -61,7 +61,7 @@ class PostRequest {
     });
 
     return await _http.post(
-      Uri.parse("${_dfmApi!['MDW_API']}admissions/enter"),
+      Uri.parse("${_dscApi!['MDW_API']}admissions/enter"),
       headers: conceteHeader(key: 'Authorization', value: _tk!['token']),
       body: _body
     );

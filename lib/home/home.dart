@@ -8,7 +8,7 @@ import 'package:mdw_crew/components/home/bottom_c.dart';
 import 'package:mdw_crew/components/text_c.dart';
 import 'package:mdw_crew/home/pages/check.dart';
 import 'package:mdw_crew/home/pages/checkout/check_out.dart';
-import 'package:mdw_crew/home/pages/admission.dart';
+import 'package:mdw_crew/home/pages/checkin.dart';
 import 'package:mdw_crew/provider/mdw_socket_p.dart';
 import 'package:mdw_crew/registration/login.dart';
 import 'package:mdw_crew/service/storage.dart';
@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
           },
           children: [
             // Check(tabType: 'Check',),
-            Admission(tabType: 'Admission'),
+            CheckIn(tabType: 'Check In'),
             const CheckOut(),
           ],
         ),

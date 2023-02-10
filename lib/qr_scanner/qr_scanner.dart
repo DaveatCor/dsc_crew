@@ -87,7 +87,7 @@ class QrScannerState extends State<QrScanner> {
               widget.title!,
               textAlign: TextAlign.center,
               textStyle: TextStyle(
-                fontSize: 17,
+                fontSize: 16,
                 color: Colors.black,
                 fontWeight: FontWeight.w700,
               ),

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as _http;
 
 class GetRequest {
 
-  static Future<_http.Response> queryDFMApiJson() async {
+  static Future<_http.Response> querydscApiJson() async {
   
     // print("dotenv.get('SELENDRA_API') ${dotenv.get('SELENDRA_API')}");
     // String _api = dotenv.get('SELENDRA_API');

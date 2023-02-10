@@ -97,7 +97,7 @@ class _CheckOutState extends State<CheckOut> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-
+                    
                     EventCardCom(
                       func: (){
 
@@ -105,7 +105,7 @@ class _CheckOutState extends State<CheckOut> {
                           context,
                           Transition(
                             child: CheckoutCount(
-                              title: 'The Greatest Artist', 
+                              title: 'Cambodian League Cup 2023', 
                               amt: Provider.of<MDWSocketProvider>(context, listen: false).tga.checkOut.toString(), 
                               func: checkOutFunc,
                               hallId: 'tga'
@@ -114,33 +114,33 @@ class _CheckOutState extends State<CheckOut> {
                           )
                         );
                       },
-                      title: 'The Greatest Artist',
-                      qty: provider.tga.checkOut.toString(),
-                      img: 'tga.png',
+                      title: 'Cambodian League Cup 2023',
+                      qty: provider.tga.checkIn.toString(),
+                      img: 'Premium2.png',
                     ),
 
-                    SizedBox(height: 30,),
+                    // SizedBox(height: 30,),
 
-                    EventCardCom(
-                      func: (){
+                    // EventCardCom(
+                    //   func: (){
                         
-                        Navigator.push(
-                          context,
-                          Transition(
-                            child: CheckoutCount(
-                              title: 'Van Gogh Alive', 
-                              amt: Provider.of<MDWSocketProvider>(context, listen: false).vga.checkIn.toString(), 
-                              func: checkOutFunc,
-                              hallId: 'vga'
-                            ),
-                            transitionEffect: TransitionEffect.RIGHT_TO_LEFT
-                          )
-                        );
-                      },
-                      title: 'Van Gogh Alive',
-                      qty: provider.vga.checkOut.toString(),
-                      img: 'vga.png',
-                    )
+                    //     Navigator.push(
+                    //       context,
+                    //       Transition(
+                    //         child: CheckoutCount(
+                    //           title: 'Van Gogh Alive', 
+                    //           amt: Provider.of<MDWSocketProvider>(context, listen: false).vga.checkIn.toString(), 
+                    //           func: checkOutFunc,
+                    //           hallId: 'vga'
+                    //         ),
+                    //         transitionEffect: TransitionEffect.RIGHT_TO_LEFT
+                    //       )
+                    //     );
+                    //   },
+                    //   title: 'Van Gogh Alive',
+                    //   qty: provider.vga.checkOut.toString(),
+                    //   img: 'vga.png',
+                    // )
                   ],
                 ),
               )

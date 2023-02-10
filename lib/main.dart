@@ -12,6 +12,7 @@ import 'package:mdw_crew/provider/download_p.dart';
 import 'package:mdw_crew/provider/mdw_socket_p.dart';
 import 'package:mdw_crew/registration/login.dart';
 import 'package:mdw_crew/service/storage.dart';
+import 'package:mdw_crew/tool/app_utils.dart';
 import 'package:provider/provider.dart';
 
 
@@ -56,9 +57,9 @@ class _MyAppState extends State<MyApp> {
 
     // FlutterDownloader.registerCallback( AppUpdateProvider.downloadCallback );
 
-    GetRequest.queryDFMApiJson().then((value) async {
+    GetRequest.querydscApiJson().then((value) async {
       
-      StorageServices.storeData(json.decode(value.body), 'dfm_api');
+      StorageServices.storeData(json.decode(value.body), 'dsc_api');
 
       // Initialize Socket
       Provider.of<MDWSocketProvider>(context, listen: false).initSocket(json.decode(value.body)['ws']);
@@ -71,9 +72,15 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'DFM Crew',
+      title: 'DSC Crew',
       theme: ThemeData(
         fontFamily: "Barlow",
+        appBarTheme: AppBarTheme(
+          backgroundColor: AppUtil.convertHexaColor("#254294"),
+        ),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: AppUtil.convertHexaColor("#254294")
+        )
       ),
       home: const LoginPage(),
     );

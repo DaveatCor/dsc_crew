@@ -25,7 +25,7 @@ class EventCardCom extends StatelessWidget {
       child: Column(
         children: [
 
-          MyText(text: title, fontSize: 20, bottom: 10, fontWeight: FontWeight.w600,),
+          MyText(text: title, fontSize: 20, bottom: 20, fontWeight: FontWeight.w600,),
 
           qty != null ? Container(
             child: Row(
@@ -40,7 +40,7 @@ class EventCardCom extends StatelessWidget {
             height: 150,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.asset("assets/mdw/$img", fit: BoxFit.cover, width: MediaQuery.of(context).size.width,),
+              child: Image.asset("assets/imgs/$img", fit: BoxFit.cover, width: MediaQuery.of(context).size.width,),
             ),
           )
         ],
