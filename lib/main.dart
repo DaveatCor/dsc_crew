@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:isolate';
 import 'dart:ui';
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -21,8 +19,6 @@ void main() async {
   await dotenv.load(fileName: ".env");
 
   WidgetsFlutterBinding.ensureInitialized();
-
-  await Firebase.initializeApp();
 
   SystemChrome.setPreferredOrientations([ DeviceOrientation.portraitUp ]);
 
@@ -74,6 +70,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'DSC Crew',
       theme: ThemeData(
+        primaryColor: AppUtil.convertHexaColor("#254294"),
+        elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppUtil.convertHexaColor("#254294")))),
         fontFamily: "Barlow",
         appBarTheme: AppBarTheme(
           backgroundColor: AppUtil.convertHexaColor("#254294"),

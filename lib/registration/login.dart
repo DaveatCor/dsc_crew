@@ -51,6 +51,9 @@ class _LoginPageState extends State<LoginPage> {
 
     cacheCheck();
 
+    _loginModel.email.text = "vga_crew01@doformetaverse.com";
+    _loginModel.pwd.text = "vga1671119615710";
+
     super.initState();
   }
 
@@ -245,6 +248,11 @@ class _LoginPageState extends State<LoginPage> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 30),
+                      child: Image.asset("assets/logos/isi-dsc-logo.png", width: 120,),
+                    ),
                     
                     MyText(
                       text: "LOGIN WITH YOUR EMAIL",
@@ -280,7 +288,6 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.blue),
                           shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15)))),
                         ),
                         onPressed: () async {
