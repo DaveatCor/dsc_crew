@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
 
-version: 0.0.2+2
+version: 0.0.6+7
 # version: 1.1.0+23
 
 environment:
@@ -26,14 +26,13 @@ environment:
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# consider running `flutter pub upgrade --major-versions`. Alternativel y,
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
     sdk: flutter
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -62,6 +61,12 @@ dependencies:
   dio: ^4.0.6
   url_launcher: ^6.1.8
   flutter_launcher_icons: ^0.11.0
+  event_crew:
+    git: 
+      url: https://github.com/selendra/event_crew_package.git
+      ref: main
+  flutter_localization: ^0.1.10
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

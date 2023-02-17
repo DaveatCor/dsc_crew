@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
           children: [
             // Check(tabType: 'Check',),
             CheckIn(tabType: 'Check In'),
-            const CheckOut(),
+            // const CheckOut(),
           ],
         ),
       ),

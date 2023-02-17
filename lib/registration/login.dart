@@ -51,10 +51,30 @@ class _LoginPageState extends State<LoginPage> {
 
     cacheCheck();
 
-    _loginModel.email.text = "vga_crew01@doformetaverse.com";
-    _loginModel.pwd.text = "vga1671119615710";
+    _loginModel.email.text = "crew@gmail.com";
+    _loginModel.pwd.text = "domreychey168@@";
+
+    _queryAcc();
 
     super.initState();
+  }
+
+  void _queryAcc() async {
+
+    await StorageServices.fetchData("admin_acc").then((value) {
+      print("admin_acc $value");
+      setState(() {
+        
+        if (value['admin_acc'].containsKey("email") && value['admin_acc'].containsKey("password") ){
+          
+          _loginModel.email.text = value['admin_acc']['email'];
+          _loginModel.pwd.text = value['admin_acc']['password'];
+        } else {
+          _loginModel.email.clear();
+          _loginModel.pwd.clear();
+        }
+      });
+    });
   }
 
   String onSubmit(String value){
@@ -93,9 +113,12 @@ class _LoginPageState extends State<LoginPage> {
     try {
       
       await PostRequest.login(_loginModel.email.text, _loginModel.pwd.text).then((value) async {
+
+        print("login value ${value.body}");
         
         _loginModel.decode = await json.decode(value.body);
-        if (  _loginModel.decode!.containsKey('success') ){
+
+        if (  !(_loginModel.decode!.containsKey('token')) ){
 
           Vibration.hasVibrator().then((value) async {
 
@@ -120,9 +143,11 @@ class _LoginPageState extends State<LoginPage> {
 
         }
         // Successfully Login
-        else {
+        else if (_loginModel.decode!.containsKey('token')) {
+
+          print("_loginModel.decode!.containsKey('token') ${_loginModel.decode!.containsKey('token')}");
           
-          await StorageServices.storeData(await json.decode(value.body), dotenv.get('REGISTRAION'));
+          await StorageServices.storeData((await json.decode(value.body))['token'], dotenv.get('REGISTRAION'));
 
           await Navigator.pushAndRemoveUntil(
             context,
@@ -176,21 +201,36 @@ class _LoginPageState extends State<LoginPage> {
     
     if (index == 0){
 
-      version = (await PackageInfo.fromPlatform()).version;
+      // version = (await PackageInfo.fromPlatform()).version;
 
-      // Close Dialog Loading
-      Navigator.pop(context);
+      // // Close Dialog Loading
+      // Navigator.pop(context);
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => AppUpdate(appVer: version))
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => AppUpdate(appVer: version))
+      // );
       
     } else {
 
-      await GetRequest.querydscApiJson().then((value) async {
 
-        await StorageServices.storeData (json.decode(value.body), 'dsc_api');
+      await GetRequest.querydscApiJson().then((value) async {
+        print("querydscApiJson");
+        print("value $value");
+        await StorageServices.storeData(
+          {
+            "LOGIN_API": (await json.decode(value.body))['LOGIN_API']
+          }, 
+          'dsc_api'
+        );
+
+        await StorageServices.storeData(
+          {
+            "admin_acc": (await json.decode(value.body))['admin_acc']
+          }, 
+          'admin_acc'
+        );
+        _queryAcc();
 
         // Close Dialog Loading
         Navigator.pop(context);
@@ -203,7 +243,9 @@ class _LoginPageState extends State<LoginPage> {
           height:  70,
           animationDuration: Duration(milliseconds: 700),
         ).show(context);
-        
+
+        // Initialize Socket
+        // Provider.of<MDWSocketProvider>(context, listen: false).initSocket(json.decode(value.body)['ws']);
       });
     }
   }

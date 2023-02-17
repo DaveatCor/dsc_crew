@@ -301,48 +301,48 @@ Widget bottomAppBarNoCheck({
             ),
           ),
     
-          Expanded(
-            child: Container(
-              height: double.maxFinite,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
+          // Expanded(
+          //   child: Container(
+          //     height: double.maxFinite,
+          //     child: Column(
+          //       mainAxisSize: MainAxisSize.min,
+          //       children: [
                     
-                  Expanded(
-                    child: InkWell(
-                      onTap: (){
+          //         Expanded(
+          //           child: InkWell(
+          //             onTap: (){
                           
-                        controller!.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeOutExpo);
-                      }, 
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+          //               controller!.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeOutExpo);
+          //             }, 
+          //             child: Column(
+          //               mainAxisAlignment: MainAxisAlignment.center,
+          //               children: [
                           
-                          Image.asset('assets/icons/check-out.png', width: iconSize, color: Colors.white,),
+          //                 Image.asset('assets/icons/check-out.png', width: iconSize, color: Colors.white,),
                           
-                          MyText(
-                            width: double.maxFinite,
-                            top: 5,
-                            text: "Check Out",
-                            fontSize: 10,
-                            bottom: 5,
-                            hexaColor: txtColor!,
-                          ),
-                        ],
-                      )
+          //                 MyText(
+          //                   width: double.maxFinite,
+          //                   top: 5,
+          //                   text: "Check Out",
+          //                   fontSize: 10,
+          //                   bottom: 5,
+          //                   hexaColor: txtColor!,
+          //                 ),
+          //               ],
+          //             )
                       
-                    ),
-                  ),
+          //           ),
+          //         ),
                     
-                  active == 1 ? Container(
-                    height: 5,
-                    width: double.maxFinite,
-                    color: Colors.white,
-                  ) : Container()
-                ],
-              ),
-            ),
-          ),
+          //         active == 1 ? Container(
+          //           height: 5,
+          //           width: double.maxFinite,
+          //           color: Colors.white,
+          //         ) : Container()
+          //       ],
+          //     ),
+          //   ),
+          // ),
     
           Expanded(
             child: Column(
@@ -400,7 +400,7 @@ Widget bottomAppBarNoCheck({
                             await StorageServices.storeData(_dscData, 'dsc_api');
                                             
                             // Dispose Web Socket
-                            Provider.of<MDWSocketProvider>(context, listen: false).dispose();
+                            // Provider.of<MDWSocketProvider>(context, listen: false).dispose();
                                             
                             Navigator.pushAndRemoveUntil(
                               context, 

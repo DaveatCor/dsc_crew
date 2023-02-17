@@ -10,50 +10,50 @@ class MDWSocketProvider with ChangeNotifier {
   IO.Socket? _socket;
   
   void initSocket(String url){
-    _socket = IO.io(
-      url, <String, dynamic>{
-        'autoConnect': true,
-        'transports': ['websocket'],
-      }
-    );
+    // _socket = IO.io(
+    //   url, <String, dynamic>{
+    //     'autoConnect': true,
+    //     'transports': ['websocket'],
+    //   }
+    // );
 
-    _socket!.connect();
+    // _socket!.connect();
 
-    _socket!.onConnect((_) {
+    // _socket!.onConnect((_) {
       
-      listenAdmission();
+    //   listenAdmission();
 
-      getAllData();
+    //   getAllData();
 
-    });
+    // });
     
   }
 
   void emitSocket(String mgs, Map<String, dynamic> data){
-    _socket!.emit(mgs, [ data ]);
+    // _socket!.emit(mgs, [ data ]);
   }
 
   void dispose(){
 
-    _socket!.disconnect();
-    _socket!.dispose();
+    // _socket!.disconnect();
+    // _socket!.dispose();
   }
 
   void getAllData(){
-    _socket!.emit('getAllData');
+    // _socket!.emit('getAllData');
 
   }
   
   void listenAdmission(){
 
-    _socket!.on('allData', (data) {
+    // _socket!.on('allData', (data) {
 
-      vga = VGA().fromSocket(data['vga']);
+    //   vga = VGA().fromSocket(data['vga']);
 
-      tga = TGA().fromSocket(data['tga']);
+    //   tga = TGA().fromSocket(data['tga']);
 
-      notifyListeners();
-    });
+    //   notifyListeners();
+    // });
 
     // _socket.emit("check-in", { 'hallId': 'vga' });
 
@@ -61,14 +61,14 @@ class MDWSocketProvider with ChangeNotifier {
 
   void test(){
 
-    _socket!.emit("check-in", { 'hallId': 'vga' });
+    // _socket!.emit("check-in", { 'hallId': 'vga' });
   }
 
   void listenCheckOut(){
 
-    _socket!.on('event', (data) {
-      // print("listenAdmission ata $data");
-    });
+    // _socket!.on('event', (data) {
+    //   // print("listenAdmission ata $data");
+    // });
 
   }
 

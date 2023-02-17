@@ -129,6 +129,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.6"
+  event_crew:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: c3c681de992a24f0f7fe3aa3d0a887168c96ae16
+      url: "https://github.com/selendra/event_crew_package.git"
+    source: git
+    version: "0.0.6"
   fake_async:
     dependency: transitive
     description:
@@ -190,6 +199,19 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_localization:
+    dependency: "direct main"
+    description:
+      name: flutter_localization
+      sha256: "331698b371173f5e49812d5b3829a73b5a0b8d22c5fdd1270c8bd6d03d653716"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.10"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_ringtone_player:
     dependency: "direct main"
     description:
@@ -288,6 +310,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.0"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.17.0"
   js:
     dependency: transitive
     description:

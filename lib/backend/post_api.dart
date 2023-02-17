@@ -23,7 +23,7 @@ class PostRequest {
     });
 
     return await _http.post(
-      Uri.parse("${_dscApi!['LOGIN_API']}login/email"),
+      Uri.parse("${_dscApi!['LOGIN_API']}admin/login"),
       headers: conceteHeader(),
       body: _body
     );
@@ -49,20 +49,32 @@ class PostRequest {
   }
 
   // Second Check To Redeem QR
-  static Future<_http.Response> addmissionFunc(final String eventId, final String qrcodeData) async {
+  static Future<_http.Response> addmissionFunc({String? eventId, required String qrcodeData}) async {
     
-    _tk = await StorageServices.fetchData(dotenv.get('REGISTRAION'));
-    
+    print("addmissionFunc backend $qrcodeData");
+    String tk = await StorageServices.fetchData(dotenv.get('REGISTRAION'));
+    print("_tk $tk");
+
     _dscApi = await StorageServices.fetchData('dsc_api');
 
+    dynamic decode = json.decode(qrcodeData);
+    
     _body = json.encode({
-      "eventId": "637ff7274903dd71e36fd4e5",
-      "qrcodeData": qrcodeData
+      "qrcode": decode
     });
-
+    
+    // ({
+    //   "eventId": "637ff7274903dd71e36fd4e5",
+    //   "qrcodeData": qrcodeData
+    // });
+// 
+    print(tk.replaceAll(" ", '%20'));
     return await _http.post(
-      Uri.parse("${_dscApi!['MDW_API']}admissions/enter"),
-      headers: conceteHeader(key: 'Authorization', value: _tk!['token']),
+      Uri.parse("${_dscApi!['LOGIN_API']}ticket/redeem"),
+      headers: conceteHeader(
+        key: 'Authorization', 
+        value: tk
+      ),
       body: _body
     );
   }

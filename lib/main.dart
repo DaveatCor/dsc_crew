@@ -12,6 +12,7 @@ import 'package:mdw_crew/registration/login.dart';
 import 'package:mdw_crew/service/storage.dart';
 import 'package:mdw_crew/tool/app_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 
 void main() async {
@@ -54,11 +55,24 @@ class _MyAppState extends State<MyApp> {
     // FlutterDownloader.registerCallback( AppUpdateProvider.downloadCallback );
 
     GetRequest.querydscApiJson().then((value) async {
-      
-      StorageServices.storeData(json.decode(value.body), 'dsc_api');
+      print("querydscApiJson");
+      print("value $value");
+      await StorageServices.storeData(
+        {
+          "LOGIN_API": (await json.decode(value.body))['LOGIN_API']
+        }, 
+        'dsc_api'
+      );
+
+      await StorageServices.storeData(
+        {
+          "admin_acc": (await json.decode(value.body))['admin_acc']
+        }, 
+        'admin_acc'
+      );
 
       // Initialize Socket
-      Provider.of<MDWSocketProvider>(context, listen: false).initSocket(json.decode(value.body)['ws']);
+      // Provider.of<MDWSocketProvider>(context, listen: false).initSocket(json.decode(value.body)['ws']);
     });
 
     super.initState();
@@ -69,6 +83,15 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'DSC Crew',
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en'), // English
+        Locale('kh'), // Spanish
+      ],
       theme: ThemeData(
         primaryColor: AppUtil.convertHexaColor("#254294"),
         elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppUtil.convertHexaColor("#254294")))),

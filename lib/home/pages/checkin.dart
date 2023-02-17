@@ -51,22 +51,23 @@ class _CheckInState extends State<CheckIn> {
     super.initState();
   }
 
-  Future<bool> admissioinFunc(String eventId, String url) async {
+  Future<bool> admissioinFunc(String eventId, String data) async {
     _isSuccess = false;
 
     try {
 
-      await PostRequest.addmissionFunc(eventId, url).then((value) async {
-        if (value.statusCode == 200 && json.decode(value.body)['status'] == 'Success'){
+      await PostRequest.addmissionFunc(qrcodeData: data).then((value) async {
+
+        if ( ((await json.decode(value.body))['status']).toString().toUpperCase() == 'SUCCESS'){
 
           _isSuccess = false;
 
           SoundUtil.soundAndVibrate('mixkit-confirmation-tone-2867.wav');
 
-          Provider.of<MDWSocketProvider>(context, listen: false).emitSocket('check-in', {'hallId': "vga"});
+          // Provider.of<MDWSocketProvider>(context, listen: false).emitSocket('check-in', {'hallId': "vga"});
 
-          await DialogCom().dialogMessage(
-            context, 
+          await DialogCom().dialogMessageNoClose(
+            context,
             title: ClipRRect(
               borderRadius: BorderRadius.circular(100),
               child: SizedBox(
@@ -79,14 +80,30 @@ class _CheckInState extends State<CheckIn> {
                 ),
               ),
             ), 
-            content: MyText(text: json.decode(value.body)['message'], fontWeight: FontWeight.w500, left: 10, right: 10,)
+            action: Container(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  // backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(1)),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+                ),
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                child: const MyText(text: "បិទ", top: 20, bottom: 20, color2: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+            ),
+            content: MyText(text: json.decode(value.body)['message'], fontWeight: FontWeight.w500, left: 10, right: 10, bottom: 10,)
+            
           );
 
-        } else {
+        }
+        // Invalid QR 
+        else {
           
           SoundUtil.soundAndVibrate('mixkit-tech-break-fail-2947.wav');
 
-          await DialogCom().dialogMessage(
+          await DialogCom().dialogMessageNoClose(
             context,
             title: ClipRRect(
               borderRadius: BorderRadius.circular(100),
@@ -100,7 +117,20 @@ class _CheckInState extends State<CheckIn> {
                 ),
               ),
             ), 
-            content: MyText(text: json.decode(value.body)['message'], fontWeight: FontWeight.w500, left: 10, right: 10,)
+            action: Container(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  // backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(1)),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+                ),
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                child: const MyText(text: "បិទ", top: 20, bottom: 20, color2: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+            ),
+            content: MyText(text: json.decode(value.body)['message'], fontWeight: FontWeight.w500, left: 10, right: 10, bottom: 10,)
             
           );
         }
@@ -110,6 +140,8 @@ class _CheckInState extends State<CheckIn> {
       return _isSuccess!;
 
     } catch (er) {
+
+      print("er.toString ${er}");
 
       SoundUtil.soundAndVibrate('mixkit-tech-break-fail-2947.wav');
 
@@ -152,7 +184,7 @@ class _CheckInState extends State<CheckIn> {
         
               Align(
                 alignment: Alignment.topLeft,
-                child: MyText(text: "Check In", fontSize: 25, fontWeight: FontWeight.w600, color2: Colors.blue, ),
+                child: MyText(text: "Admission", fontSize: 25, fontWeight: FontWeight.w600, color2: Colors.blue, ),
               ),
 
               Expanded(
