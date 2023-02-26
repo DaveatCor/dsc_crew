@@ -9,6 +9,7 @@ class EventCardCom extends StatelessWidget {
   final String? img;
   final String? title;
   final String? qty;
+  final Map<String, dynamic>? matchInfo;
   final Function()? func;
   
   const EventCardCom({
@@ -16,6 +17,7 @@ class EventCardCom extends StatelessWidget {
     required this.img,
     required this.title,
     this.qty,
+    this.matchInfo,
     required this.func
   });
 
@@ -38,17 +40,17 @@ class EventCardCom extends StatelessWidget {
           // ) : Container(),
 
           SizedBox(
-            height: 220,
+            height: 230,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Stack(
                 alignment: Alignment.center,
                 children: [
 
-                  Image.asset("assets/imgs/$img", fit: BoxFit.cover, width: MediaQuery.of(context).size.width,),
+                  Image.asset("assets/imgs/$img", fit: BoxFit.cover, width: MediaQuery.of(context).size.width, height: 230,),
 
                   Container(
-                    height: 220,
+                    height: 230,
                     color: Colors.black.withOpacity(0.5),
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     child: Column(
@@ -62,7 +64,7 @@ class EventCardCom extends StatelessWidget {
                           animatedTexts: [
 
                             TypewriterAnimatedText(
-                              "18/Feb/2023",
+                              matchInfo!['match_date'],
                               textAlign: TextAlign.center,
                               textStyle: TextStyle(
                                 fontWeight: FontWeight.bold, 
@@ -83,9 +85,9 @@ class EventCardCom extends StatelessWidget {
                               Expanded(
                                 child: Column(
                                   children: [
-                                    Image.asset('assets/logos/isi-dsc-logo.png'),
+                                    Image.network(matchInfo!['first']),
                                           
-                                    MyText(text: 'ISI DANGKOR SENCHEY FC', fontWeight: FontWeight.bold, color2: Colors.white,)
+                                    MyText(top: 10, text: matchInfo!['first_club_name'], fontWeight: FontWeight.bold, color2: Colors.white,)
                                   ],
                                 )
                               ),
@@ -103,7 +105,7 @@ class EventCardCom extends StatelessWidget {
                                         animatedTexts: [
 
                                           FadeAnimatedText(
-                                            "15:45",
+                                            matchInfo!['kick_off_time'],
                                             textAlign: TextAlign.center,
                                             textStyle: TextStyle(
                                               fontWeight: FontWeight.bold, 
@@ -123,12 +125,13 @@ class EventCardCom extends StatelessWidget {
                               Expanded(
                                 child: Column(
                                   children: [
-                                    Image.asset('assets/logos/naga.png'),
+                                    Image.network(matchInfo!['second']),
                                           
-                                    MyText(text: 'NAGA WORLD FC', fontWeight: FontWeight.bold, color2: Colors.white)
+                                    MyText(top: 10, text: matchInfo!['second_club_name'], fontWeight: FontWeight.bold, color2: Colors.white)
                                   ],
                                 )
                               ),
+                              
                             ],
                           ),
                         )

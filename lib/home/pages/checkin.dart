@@ -41,14 +41,23 @@ class CheckIn extends StatefulWidget {
 
 class _CheckInState extends State<CheckIn> {
 
+  List<Map<String, dynamic>>? matches;
+
   double iconSize = 35;
 
   bool? _isSuccess = false;
 
   @override
   initState(){
-
+    queryMatch();
     super.initState();
+  }
+
+  void queryMatch() async {
+
+    matches = List<Map<String, dynamic>>.from( (await StorageServices.fetchData('matches'))['matches']);
+
+    setState(() { });
   }
 
   Future<bool> admissioinFunc(String eventId, String data) async {
@@ -66,6 +75,7 @@ class _CheckInState extends State<CheckIn> {
 
           // Provider.of<MDWSocketProvider>(context, listen: false).emitSocket('check-in', {'hallId': "vga"});
 
+          // ignore: use_build_context_synchronously
           await DialogCom().dialogMessageNoClose(
             context,
             title: ClipRRect(
@@ -122,7 +132,7 @@ class _CheckInState extends State<CheckIn> {
               child: ElevatedButton(
                 style: ButtonStyle(
                   // backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(1)),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+                  shape: MaterialStateProperty.all(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
                 ),
                 onPressed: (){
                   Navigator.pop(context);
@@ -140,8 +150,6 @@ class _CheckInState extends State<CheckIn> {
       return _isSuccess!;
 
     } catch (er) {
-
-      print("er.toString ${er}");
 
       SoundUtil.soundAndVibrate('mixkit-tech-break-fail-2947.wav');
 
@@ -162,10 +170,6 @@ class _CheckInState extends State<CheckIn> {
         // ignore: unnecessary_null_comparison
         content: const MyText(text: "Something when wrong", fontWeight: FontWeight.w500, left: 10, right: 10,)
       );
-      
-      if (kDebugMode){
-        print("admissioinFunc failed");
-      }
 
       return _isSuccess!;
     }
@@ -182,7 +186,7 @@ class _CheckInState extends State<CheckIn> {
         
             children: [
         
-              Align(
+              const Align(
                 alignment: Alignment.topLeft,
                 child: MyText(text: "Admission", fontSize: 25, fontWeight: FontWeight.w600, color2: Colors.blue, ),
               ),
@@ -191,20 +195,27 @@ class _CheckInState extends State<CheckIn> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    
+                    matches != null ? ListView.builder(
+                      itemCount: matches!.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index){
+                        return EventCardCom(
+                          func: () async {
 
-                    EventCardCom(
-                      func: () async {
+                            Navigator.push(
+                              context, 
+                              Transition(child: QrScanner(title: '${widget.tabType}', func: admissioinFunc, hallId: 'tga',), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
+                            );
 
-                        Navigator.push(
-                          context, 
-                          Transition(child: QrScanner(title: '${widget.tabType}', func: admissioinFunc, hallId: 'tga',), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
+                          },
+                          title: matches![index]['title'],
+                          qty: provider.tga.checkIn.toString(),
+                          img: 'Premium2.png',
+                          matchInfo: matches![index]
                         );
-
-                      },
-                      title: 'Cambodian League Cup 2023',
-                      qty: provider.tga.checkIn.toString(),
-                      img: 'Premium2.png',
-                    ),
+                      }
+                    ) : Container(),
               
                     // SizedBox(height: 30,),
                           

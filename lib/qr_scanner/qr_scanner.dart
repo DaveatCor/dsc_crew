@@ -58,7 +58,7 @@ class QrScannerState extends State<QrScanner> {
   }
   
   Future<void> qrData(String data) async {
-    
+    print("qrData function $data");
     DialogCom().dialogLoading(context);
     
     await widget.func!('', data);

@@ -62,9 +62,9 @@ class _LoginPageState extends State<LoginPage> {
   void _queryAcc() async {
 
     await StorageServices.fetchData("admin_acc").then((value) {
-      print("admin_acc $value");
-      setState(() {
-        
+
+      if (value != null){
+
         if (value['admin_acc'].containsKey("email") && value['admin_acc'].containsKey("password") ){
           
           _loginModel.email.text = value['admin_acc']['email'];
@@ -73,7 +73,8 @@ class _LoginPageState extends State<LoginPage> {
           _loginModel.email.clear();
           _loginModel.pwd.clear();
         }
-      });
+        if (mounted) setState(() { });
+      }
     });
   }
 
@@ -146,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
         else if (_loginModel.decode!.containsKey('token')) {
 
           print("_loginModel.decode!.containsKey('token') ${_loginModel.decode!.containsKey('token')}");
-          
+          await queryDSCJSON();
           await StorageServices.storeData((await json.decode(value.body))['token'], dotenv.get('REGISTRAION'));
 
           await Navigator.pushAndRemoveUntil(
@@ -186,6 +187,37 @@ class _LoginPageState extends State<LoginPage> {
       }
 
     }
+  }
+  
+  Future<void> queryDSCJSON() async {
+
+    await GetRequest.querydscApiJson().then((value) async {
+      print("querydscApiJson");
+      print("value ${value.body}");
+      await StorageServices.storeData(
+        {
+          "LOGIN_API": (await json.decode(value.body))['LOGIN_API']
+        }, 
+        'dsc_api'
+      );
+
+      await StorageServices.storeData(
+        {
+          "matches": (await json.decode(value.body))['matches']
+        }, 
+        'matches'
+      );
+
+      await StorageServices.storeData(
+        {
+          "admin_acc": (await json.decode(value.body))['admin_acc']
+        }, 
+        'admin_acc'
+      );
+
+      // Initialize Socket
+      // Provider.of<MDWSocketProvider>(context, listen: false).initSocket(json.decode(value.body)['ws']);
+    });
   }
 
   void changeShow(bool? value){

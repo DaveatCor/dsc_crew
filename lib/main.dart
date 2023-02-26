@@ -56,12 +56,19 @@ class _MyAppState extends State<MyApp> {
 
     GetRequest.querydscApiJson().then((value) async {
       print("querydscApiJson");
-      print("value $value");
+      print("value ${value.body}");
       await StorageServices.storeData(
         {
           "LOGIN_API": (await json.decode(value.body))['LOGIN_API']
         }, 
         'dsc_api'
+      );
+
+      await StorageServices.storeData(
+        {
+          "matches": (await json.decode(value.body))['matches']
+        }, 
+        'matches'
       );
 
       await StorageServices.storeData(
@@ -83,12 +90,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'DSC Crew',
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale('en'), // English
         Locale('kh'), // Spanish
       ],
