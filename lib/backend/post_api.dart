@@ -7,6 +7,8 @@ import 'package:mdw_crew/service/storage.dart';
 
 class PostRequest {
 
+  static String? _api;
+
   static String? _body;
 
   static Map<String, dynamic>? _tk;
@@ -23,7 +25,7 @@ class PostRequest {
     });
 
     return await _http.post(
-      Uri.parse("${_dscApi!['LOGIN_API']}admin/login"),
+      Uri.parse("${_dscApi!["api"]}admin/login"),
       headers: conceteHeader(),
       body: _body
     );
@@ -70,7 +72,7 @@ class PostRequest {
 // 
     print(tk.replaceAll(" ", '%20'));
     return await _http.post(
-      Uri.parse("${_dscApi!['LOGIN_API']}ticket/redeem"),
+      Uri.parse("${_dscApi!["api"]}ticket/redeem"),
       headers: conceteHeader(
         key: 'Authorization', 
         value: tk
@@ -95,5 +97,44 @@ class PostRequest {
   //     body: _body
   //   );
   // }
+
+  // Check Out
+  static Future<_http.Response> claimBenefits(final String id, List<Map<String, dynamic>> benefits) async {
+    print("id $id");
+    print("benefits $benefits");
+    // _tk = await StorageServices.fetchData(dotenv.get('REGISTRAION'));
+
+    await StorageServices.fetchData("dsc_api").then((api) {
+      
+      print("api $api");
+
+      _api = api["api"];
+      print("dsc_api $_api");
+    });
+
+    await StorageServices.fetchData("dsc_api_test").then((apiTest) {
+
+      print("apiTest $apiTest");
+
+      if (apiTest != null){
+        _api = apiTest["api_test"];
+        print("dsc_api_test $_api");
+      }
+    });
+
+    _body = json.encode({
+      "_id": id,
+      "claim_benefits": benefits
+    });
+
+    print("_body $_body");
+
+    return await _http.post(
+      Uri.parse("${_api}update-claim-benefits"),
+      // headers: conceteHeader(key: 'Authorization', value: _tk!['token']),
+      headers: conceteHeader(),
+      body: _body
+    );
+  }
 
 }

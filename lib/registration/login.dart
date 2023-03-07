@@ -69,10 +69,11 @@ class _LoginPageState extends State<LoginPage> {
           
           _loginModel.email.text = value['admin_acc']['email'];
           _loginModel.pwd.text = value['admin_acc']['password'];
-        } else {
-          _loginModel.email.clear();
-          _loginModel.pwd.clear();
         }
+        //  else {
+        //   _loginModel.email.clear();
+        //   _loginModel.pwd.clear();
+        // }
         if (mounted) setState(() { });
       }
     });
@@ -196,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
       print("value ${value.body}");
       await StorageServices.storeData(
         {
-          "LOGIN_API": (await json.decode(value.body))['LOGIN_API']
+          "APII": (await json.decode(value.body))['APII']
         }, 
         'dsc_api'
       );
@@ -251,7 +252,7 @@ class _LoginPageState extends State<LoginPage> {
         print("value $value");
         await StorageServices.storeData(
           {
-            "LOGIN_API": (await json.decode(value.body))['LOGIN_API']
+            "APII": (await json.decode(value.body))['APII']
           }, 
           'dsc_api'
         );

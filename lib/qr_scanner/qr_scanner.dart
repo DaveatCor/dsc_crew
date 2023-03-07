@@ -4,16 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:mdw_crew/components/dialog_c.dart';
 import 'package:mdw_crew/components/text_c.dart';
 import 'package:mdw_crew/provider/mdw_socket_p.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QrScanner extends StatefulWidget {
 
+  /// func example: 
+  /// func!('', data);
   final Function? func;
   final String? title;
   final String? hallId;
+  final bool? noAppBar;
 
-  const QrScanner({Key? key, required this.title, required this.func, this.hallId}) : super(key: key);
+  const QrScanner({Key? key, required this.title, required this.func, this.hallId, this.noAppBar = false}) : super(key: key);
 
   // final List portList;
   // final WalletSDK sdk;
@@ -73,7 +77,7 @@ class QrScannerState extends State<QrScanner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: widget.noAppBar == true ? AppBar(
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(
           color: Colors.black
@@ -113,7 +117,7 @@ class QrScannerState extends State<QrScanner> {
               alignment: Alignment.center,
               child: widget.hallId == null 
               ? Container() 
-              : Consumer<MDWSocketProvider>(
+              : Consumer<DSCSocketProvider>(
                 builder: (context, provider, child) {
                   return AnimatedTextKit(
                     // pause: Duration(milliseconds: 300),
@@ -138,11 +142,10 @@ class QrScannerState extends State<QrScanner> {
             ),
           )
         ],
-      ),
+      ) : null,
 
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
-        
         child: Column(
           children: [
             
@@ -150,17 +153,31 @@ class QrScannerState extends State<QrScanner> {
               child: Stack(
                 children: [
 
-                  QRView(
-                    key: qrKey,
-                    onQRViewCreated: (QRViewController qrView) async {
-                      await _onQrViewCreated(qrView);
+                  MobileScanner(
+                    // startDelay: true,
+                    controller: MobileScannerController(torchEnabled: false),
+                    errorBuilder: (context, error, child) {
+                      return Container();//ScannerErrorWidget(error: error);
                     },
-                    overlay: QrScannerOverlayShape(
-                      borderColor: Colors.white,
-                      borderRadius: 10,
-                      borderWidth: 5,
-                    ),
-                  ),
+                    onDetect: (capture) async {
+                      await DialogCom().dialogMessage(context, title: MyText(text: capture.barcodes.first.rawValue,));
+                      // setState(() {
+                      //   this.capture = capture;
+                      // });
+                    },
+                  )
+                  // QRView(
+                  //   key: qrKey,
+                  //   onQRViewCreated: (QRViewController qrView) async {
+                  //     await _onQrViewCreated(qrView);
+                  //   },
+                  //   // overlay: QrScannerOverlayShape(
+                  //   //   borderColor: Colors.white,
+                  //   //   borderRadius: 10,
+                  //   //   borderWidth: 5,
+                  //   //   borderLength: 50,
+                  //   // ),
+                  // ),
                 ]
               )
             ),

@@ -33,7 +33,7 @@ class CheckoutCount extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             
-            Consumer<MDWSocketProvider>(
+            Consumer<DSCSocketProvider>(
               builder: (context, provider, w) {
 
                 return Column(

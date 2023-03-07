@@ -1,8 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:mdw_crew/components/text_c.dart';
-import 'package:mdw_crew/qr_scanner/qr_scanner.dart';
-import 'package:transition/transition.dart';
 
 class EventCardCom extends StatelessWidget {
 
@@ -14,10 +12,10 @@ class EventCardCom extends StatelessWidget {
   
   const EventCardCom({
     super.key, 
-    required this.img,
-    required this.title,
     this.qty,
     this.matchInfo,
+    required this.img,
+    required this.title,
     required this.func
   });
 
@@ -29,15 +27,6 @@ class EventCardCom extends StatelessWidget {
         children: [
 
           MyText(text: title, fontSize: 20, bottom: 20, fontWeight: FontWeight.w600,),
-
-          // qty != null ? Container(
-          //   child: Row(
-          //     children: [
-                
-          //       MyText(text: "Quantity: $qty", bottom: 10, fontSize: 13,),
-          //     ],
-          //   ),
-          // ) : Container(),
 
           SizedBox(
             height: 230,
@@ -57,28 +46,29 @@ class EventCardCom extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+
+                        MyText(text: matchInfo!['match_date'], fontSize: 18, fontWeight: FontWeight.bold, color2: Colors.white,),
                         
-                        AnimatedTextKit(
-                          repeatForever: true,
-                          pause: const Duration(seconds: 1),
-                          animatedTexts: [
+                        // AnimatedTextKit(
+                        //   repeatForever: true,
+                        //   pause: const Duration(seconds: 1),
+                        //   animatedTexts: [
 
-                            TypewriterAnimatedText(
-                              matchInfo!['match_date'],
-                              textAlign: TextAlign.center,
-                              textStyle: TextStyle(
-                                fontWeight: FontWeight.bold, 
-                                color: Colors.white, 
-                                fontSize: 18
-                              ),
-                            ),
+                        //     TypewriterAnimatedText(
+                        //       ,
+                        //       textAlign: TextAlign.center,
+                        //       textStyle: const TextStyle(
+                        //         fontWeight: FontWeight.bold, 
+                        //         color: Colors.white, 
+                        //         fontSize: 18
+                        //       ),
+                        //     ),
 
-                          ],
-                        ),
-                        // MyText(text: "18/Feb/2023", fontWeight: FontWeight.bold, color2: Colors.white, fontSize: 22, bottom: 10,),
-                  
+                        //   ],
+                        // ),
+
                         Container(
-                          margin: EdgeInsets.only(top: 20),
+                          margin: const EdgeInsets.only(top: 20),
                           child: Row(
                             children: [
                               
@@ -95,9 +85,10 @@ class EventCardCom extends StatelessWidget {
                               Expanded(
                                 child: Column(
                                   children: [
-                                    MyText(text: 'KICK-OFF', fontWeight: FontWeight.bold, color2: Colors.white, fontSize: 22,),
+                                    
+                                    const MyText(text: 'KICK-OFF', fontWeight: FontWeight.bold, color2: Colors.white, fontSize: 22,),
 
-                                    Container(
+                                    SizedBox(
                                       height: 50,
                                       child: AnimatedTextKit(
                                         repeatForever: true,
@@ -107,7 +98,7 @@ class EventCardCom extends StatelessWidget {
                                           FadeAnimatedText(
                                             matchInfo!['kick_off_time'],
                                             textAlign: TextAlign.center,
-                                            textStyle: TextStyle(
+                                            textStyle: const TextStyle(
                                               fontWeight: FontWeight.bold, 
                                               color: Colors.white, 
                                               fontSize: 18,

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:app_installer/app_installer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ import 'package:vibration/vibration.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../backend/get_api.dart';
+import 'package:event_crew/event_crew.dart' as evtCrew;
 
 
 class CheckIn extends StatefulWidget {
@@ -112,37 +114,12 @@ class _CheckInState extends State<CheckIn> {
         else {
           
           SoundUtil.soundAndVibrate('mixkit-tech-break-fail-2947.wav');
-
-          await DialogCom().dialogMessageNoClose(
+          // ignore: use_build_context_synchronously
+          await evtCrew.DialogCom().errorMsg(
             context,
-            title: ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: SizedBox(
-                width: 30,
-                child: Lottie.asset(
-                  "assets/animation/failed.json",
-                  repeat: true,
-                  reverse: true,
-                  height: 100
-                ),
-              ),
-            ), 
-            action: Container(
-              width: MediaQuery.of(context).size.width,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  // backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(1)),
-                  shape: MaterialStateProperty.all(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
-                ),
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                child: const MyText(text: "បិទ", top: 20, bottom: 20, color2: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
-              ),
-            ),
-            content: MyText(text: json.decode(value.body)['message'], fontWeight: FontWeight.w500, left: 10, right: 10, bottom: 10,)
-            
+            json.decode(value.body)['message']
           );
+
         }
         
       });
@@ -153,23 +130,28 @@ class _CheckInState extends State<CheckIn> {
 
       SoundUtil.soundAndVibrate('mixkit-tech-break-fail-2947.wav');
 
-      await DialogCom().dialogMessage(
-        context, 
-        title: ClipRRect(
-          borderRadius: BorderRadius.circular(100),
-          child: SizedBox(
-            width: 30,
-            child: Lottie.asset(
-              "assets/animation/failed.json",
-              repeat: true,
-              reverse: true,
-              height: 100
-            ),
-          ),
-        ), 
-        // ignore: unnecessary_null_comparison
-        content: const MyText(text: "Something when wrong", fontWeight: FontWeight.w500, left: 10, right: 10,)
+      await evtCrew.DialogCom().errorMsg(
+        context,
+        'Something when wrong'
       );
+
+      // DialogCom().dialogMessage(
+      //   context, 
+      //   title: ClipRRect(
+      //     borderRadius: BorderRadius.circular(100),
+      //     child: SizedBox(
+      //       width: 30,
+      //       child: Lottie.asset(
+      //         "assets/animation/failed.json",
+      //         repeat: true,
+      //         reverse: true,
+      //         height: 100
+      //       ),
+      //     ),
+      //   ), 
+      //   // ignore: unnecessary_null_comparison
+      //   content: const MyText(text: "", fontWeight: FontWeight.w500, left: 10, right: 10,)
+      // );
 
       return _isSuccess!;
     }
@@ -177,7 +159,7 @@ class _CheckInState extends State<CheckIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MDWSocketProvider>(
+    return Consumer<DSCSocketProvider>(
       builder: (context, provider, widgets) {
         return Container(
           color: Colors.blue.withOpacity(0.15),
@@ -185,10 +167,27 @@ class _CheckInState extends State<CheckIn> {
           child: Column(
         
             children: [
-        
-              const Align(
+
+              Align(
                 alignment: Alignment.topLeft,
-                child: MyText(text: "Admission", fontSize: 25, fontWeight: FontWeight.w600, color2: Colors.blue, ),
+                child: SizedBox(
+                  height: 80,
+                  child: AnimatedTextKit(
+                    // pause: Duration(milliseconds: 300),
+                    repeatForever: true,
+                    animatedTexts: [
+                      
+                      TypewriterAnimatedText(
+                        'ស្កេនសំបុត្រ', 
+                        textStyle: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold, ),
+                        
+                      ),
+                      // MyText(text: widget.hallId == 'vga' ? provider.vga.checkIn.toString() : provider.tga.checkIn.toString(), color2: Colors.green, right: 10, fontWeight: FontWeight.bold, fontSize: 17,);
+                    ],
+                    onTap: () {
+                    },
+                  ),
+                )
               ),
 
               Expanded(
@@ -200,6 +199,7 @@ class _CheckInState extends State<CheckIn> {
                       itemCount: matches!.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index){
+                        
                         return EventCardCom(
                           func: () async {
 
@@ -216,22 +216,7 @@ class _CheckInState extends State<CheckIn> {
                         );
                       }
                     ) : Container(),
-              
-                    // SizedBox(height: 30,),
-                          
-                    // EventCardCom(
-                    //   func: () async {
 
-                    //     Navigator.push(
-                    //       context, 
-                    //       Transition(child: QrScanner(title: 'Van Gogh Alive (${widget.tabType})', func: admissioinFunc, hallId: 'vga',), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
-                    //     );
-                        
-                    //   },
-                    //   title: 'Van Gogh Alive',
-                    //   qty: provider.vga.checkIn.toString(),
-                    //   img: 'vga.png',
-                    // ),
                   ],
                 ),
               )

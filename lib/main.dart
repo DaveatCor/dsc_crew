@@ -1,10 +1,7 @@
 import 'dart:convert';
-import 'dart:isolate';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:mdw_crew/backend/get_api.dart';
 import 'package:mdw_crew/provider/download_p.dart';
 import 'package:mdw_crew/provider/mdw_socket_p.dart';
@@ -12,6 +9,9 @@ import 'package:mdw_crew/registration/login.dart';
 import 'package:mdw_crew/service/storage.dart';
 import 'package:mdw_crew/tool/app_utils.dart';
 import 'package:provider/provider.dart';
+import 'dart:isolate';
+import 'dart:ui';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 
@@ -31,7 +31,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<MDWSocketProvider>(create: (context) => MDWSocketProvider()),
+        ChangeNotifierProvider<DSCSocketProvider>(create: (context) => DSCSocketProvider()),
         ChangeNotifierProvider<AppUpdateProvider>(create: (context) => AppUpdateProvider())
       ],
       child: const MyApp(),
@@ -55,22 +55,34 @@ class _MyAppState extends State<MyApp> {
     // FlutterDownloader.registerCallback( AppUpdateProvider.downloadCallback );
 
     GetRequest.querydscApiJson().then((value) async {
-      print("querydscApiJson");
-      print("value ${value.body}");
+      
+      // Query API from Github Host
       await StorageServices.storeData(
         {
-          "LOGIN_API": (await json.decode(value.body))['LOGIN_API']
+          "api": (await json.decode(value.body))["api"]
         }, 
         'dsc_api'
       );
 
+      if ((await json.decode(value.body))["api_test"] != null){
+
+        await StorageServices.storeData(
+          {
+            "api_test": (await json.decode(value.body))["api_test"]
+          }, 
+          'dsc_api_test'
+        );
+      }
+
+      /// Query Match Data
       await StorageServices.storeData(
         {
           "matches": (await json.decode(value.body))['matches']
         }, 
         'matches'
       );
-
+      
+      // Query Admin Account
       await StorageServices.storeData(
         {
           "admin_acc": (await json.decode(value.body))['admin_acc']

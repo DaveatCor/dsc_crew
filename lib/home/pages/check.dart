@@ -121,7 +121,7 @@ class _CheckState extends State<Check> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MDWSocketProvider>(
+    return Consumer<DSCSocketProvider>(
       builder: (context, provider, widgets) {
         return Container(
           color: Colors.green.withOpacity(0.15),

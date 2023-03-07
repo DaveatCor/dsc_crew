@@ -30,7 +30,7 @@ class _CheckOutState extends State<CheckOut> {
 
     try {
 
-      Provider.of<MDWSocketProvider>(context, listen: false).emitSocket('check-out', {'hallId': hallId});
+      Provider.of<DSCSocketProvider>(context, listen: false).emitSocket('check-out', {'hallId': hallId});
 
       // await PostRequest.checkOutFunc(eventId, url).then((value) async {
         
@@ -79,7 +79,7 @@ class _CheckOutState extends State<CheckOut> {
   @override
   Widget build(BuildContext context) {
 
-    return Consumer<MDWSocketProvider>(
+    return Consumer<DSCSocketProvider>(
       builder: (context, provider, widget) {
         return Container(
           color: Colors.redAccent.withOpacity(0.15),
@@ -106,7 +106,7 @@ class _CheckOutState extends State<CheckOut> {
                           Transition(
                             child: CheckoutCount(
                               title: 'Cambodian League Cup 2023', 
-                              amt: Provider.of<MDWSocketProvider>(context, listen: false).tga.checkOut.toString(), 
+                              amt: Provider.of<DSCSocketProvider>(context, listen: false).tga.checkOut.toString(), 
                               func: checkOutFunc,
                               hallId: 'tga'
                             ), 

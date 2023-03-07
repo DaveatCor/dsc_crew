@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mdw_crew/model/mdw_m.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-class MDWSocketProvider with ChangeNotifier {
+class DSCSocketProvider with ChangeNotifier {
 
   VGA vga = VGA();
   TGA tga = TGA();
