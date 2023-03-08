@@ -117,7 +117,20 @@ class _CheckInState extends State<CheckIn> {
           // ignore: use_build_context_synchronously
           await evtCrew.DialogCom().errorMsg(
             context,
-            json.decode(value.body)['message']
+            json.decode(value.body)['message'],
+            action2: Container(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  // backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(1)),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+                ),
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                child: const MyText(text: "បិទ", top: 20, bottom: 20, color2: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+            )
           );
 
         }

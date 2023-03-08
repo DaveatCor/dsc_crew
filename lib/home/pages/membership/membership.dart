@@ -20,6 +20,7 @@ import 'package:transition/transition.dart';
 import 'package:event_crew/event_crew.dart' as event_crew;
 
 class Membership extends StatefulWidget {
+  
   const Membership({super.key});
 
   @override
@@ -35,6 +36,8 @@ class _MembershipState extends State<Membership> {
   List<Map<String, dynamic>> selectedIndex = [];
 
   List<Benefit>? benefits;
+
+  List<Benefit>? tmpBenefits;
 
   List<Map<String, dynamic>>? matches;
 
@@ -118,24 +121,6 @@ class _MembershipState extends State<Membership> {
         'Something when wrong'
       );
 
-      // DialogCom().dialogMessage(
-      //   context, 
-      //   title: ClipRRect(
-      //     borderRadius: BorderRadius.circular(100),
-      //     child: SizedBox(
-      //       width: 30,
-      //       child: Lottie.asset(
-      //         "assets/animation/failed.json",
-      //         repeat: true,
-      //         reverse: true,
-      //         height: 100
-      //       ),
-      //     ),
-      //   ), 
-      //   // ignore: unnecessary_null_comparison
-      //   content: const MyText(text: "", fontWeight: FontWeight.w500, left: 10, right: 10,)
-      // );
-
       return _isSuccess!;
     }
   }
@@ -151,154 +136,375 @@ class _MembershipState extends State<Membership> {
 
   Future<void> claimingDialog(Response value) async {
 
-    print("value $value");
+//     Response value = Response(json.encode({
+// 	"_id": "64070a335ec86b0c9f28cbdd",
+// 	"userId": "63fef9817b8ae45c7d1261b8",
+// 	"membershipPackageId": "63db392708c7e10fced41aff",
+// 	"no": "751755",
+// 	"cardImage": "0xf78128b3687f05657C6c1E340ba14975253d8B66.png",
+// 	"claim_benefits": [
+// 		{
+// 			"name": "home_jersey",
+// 			"status": true,
+// 			"img": "https://gateway.kumandra.org/files/QmYjXfT57Xd52jdouP2Au992xZ2k6enBikLF1cWnk8ZnRk"
+// 		},
+// 		{
+// 			"name": "scarf",
+// 			"status": true,
+// 			"img": "https://gateway.kumandra.org/files/QmTjEVpMkyNtyjXs4o2WENiey1a69WvC4GS8KVHqcyaSrV"
+// 		},
+// 		{
+// 			"name": "suzuki_jaccs",
+// 			"status": true,
+// 			"img": "https://gateway.kumandra.org/files/QmfBZ1Shzd7ry3AuxUMjELcNRZkDQpkCb7BVNc1zDpLM4h"
+// 		},
+// 		{
+// 			"name": "brown",
+// 			"status": true,
+// 			"img": "https://gateway.kumandra.org/files/QmbX2De3uWaM1PtNpJijwzqqMee2ruc8tu1t3wqjMHDkPX"
+// 		},
+// 		{
+// 			"name": "the_ground_market",
+// 			"status": false,
+// 			"img": "https://gateway.kumandra.org/files/QmXx1SpyzvXhzBzzVjyMMfWiP2gjm65tWMUknBrqhXzwv4"
+// 		},
+// 		{
+// 			"name": "potato_cornor",
+// 			"status": true,
+// 			"img": "https://gateway.kumandra.org/files/QmQRyD4zq58WbYbufHmXkFzqctLni345worXhbkHcHKgfr"
+// 		},
+// 		{
+// 			"name": "metro",
+// 			"status": false,
+// 			"img": "https://gateway.kumandra.org/files/QmaJX93zWqmCgHBmc1utvp3ZqN6Zw9JAVZxJA27mrwjzYL"
+// 		},
+// 		{
+// 			"name": "amazon",
+// 			"status": false,
+// 			"img": "https://gateway.kumandra.org/files/QmSgKZS78RrspFz1tpok1rL5vxaeJNfC4M2thZoYL8bXMT"
+// 		},
+// 		{
+// 			"name": "cristal_chicken",
+// 			"status": true,
+// 			"img": "https://gateway.kumandra.org/files/QmPW5nAbuF7GR65Tsfxg8btpdDBwjS82irRCNVTpAzGfET"
+// 		},
+// 		{
+// 			"name": "dek_cha",
+// 			"status": false,
+// 			"img": "https://gateway.kumandra.org/files/QmQ3ckcY44gDcuCShuikWn3vREWhSVyF71t9MAfmcKqjds"
+// 		},
+// 		{
+// 			"name": "ten11_zando",
+// 			"status": false,
+// 			"img": "https://gateway.kumandra.org/files/Qmb3vGbfmRbqkVqpDyLrzuVt64HV1hYjMiprNbbDwLXDdw"
+// 		}
+// 	],
+// 	"isGift": false,
+// 	"createdAt": "2023-03-07T09:56:03.597Z",
+// 	"updatedAt": "2023-03-07T16:45:40.909Z",
+// 	"__v": 0,
+// 	"id": "64070a335ec86b0c9f28cbdd"
+// }), 200);
 
-    // Response value = Response(json.encode({"_id":"64070a335ec86b0c9f28cbdd","userId":"63f6d942187c33db47756b68","membershipPackageId":"63db392708c7e10fced41afe",
-    //                             "claim_benefits": [
-    //                               {
-    //                                 "name": "Home Jersey",
-    //                                 "status" :false,
-    //                               },
-    //                               {
-    //                                 "name": "Suzuki Jaccs",
-    //                                 "status":false
-    //                               },
-    //                               {
-    //                                 "name": "Brown",
-    //                                 "status": false
-    //                               },
-    //                               {
-    //                                 "name": "The Ground market",
-    //                                 "status": false
-    //                               },
-    //                               {
-    //                                 "name": "Potato Cornor",
-    //                                 "status": false,
-    //                               },
-    //                               {
-    //                                 "name": "Metro",
-    //                                 "status": false
-    //                               },
-    //                               {
-    //                                 "name": "Amazon",
-    //                                 "status": false,
-    //                               },
-    //                               {
-    //                                 "name": "Cristal Chicken",
-    //                                 "status": false
-    //                               },
-    //                               {
-    //                                 "name": "Dek Cha",
-    //                                 "status": true,
-    //                               },
-    //                               {
-    //                                 "name": "Ten11 Zando",
-    //                                 "status": true
-    //                               }
-    //                             ],"no":"821501","cardImage":"0x379D31eC307FC4F8EadAE0D32969ABF4FB534AC5.png","isGift":false,"createdAt":"2023-02-16T04:51:26.605Z","updatedAt":"2023-03-06T07:26:21.240Z","__v":0,"id":"64070a335ec86b0c9f28cbdd"}), 200);
+    // Response value = await GetRequest.claimBenefit("0xf78128b3687f05657C6c1E340ba14975253d8B66");
+
     decode = json.decode(value.body);
 
     benefits = Benefit().filter(List<Map<String, dynamic>>.from(decode!['claim_benefits']));
 
+    tmpBenefits = Benefit().filter(List<Map<String, dynamic>>.from(decode!['claim_benefits']));
+
     // selectedItems =
-    print(benefits!.where((element) => element.status == true ? true : false).toList());
+    // print(benefits!.where((element) => element.status == true ? true : false).toList());
 
-    await FilterListDialog.display<Benefit>(
-      context,
-      listData: benefits!,
-      selectedListData: selectedItems,
-      
-      choiceChipBuilder: (context, wg, status){
-        print("wg ${wg.name} ${wg.status}");
-        return Card(
-          color: wg.status == true ? Colors.blue[900] : Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          child: Padding(
-            padding: const EdgeInsets.all(13),
-            child: Row(
-              children: [
-                Image.network(wg.img, width: 10, height: 10,),
-                MyText(text: wg.name.toString(), fontWeight: FontWeight.w700,)
-              ],
-            ),
-          ),
-        );
-      },
-      choiceChipLabel: (keys) {
-        return keys!.name;
-      },
-      validateSelectedItem: (list, val) {
-        // selectedIndex.add(benefits.indexOf(val));
-        return list!.contains(val);
-      },
-      onItemSearch: (user, query) {
-        return false;// user.name!.toLowerCase().contains(query.toLowerCase());
-      },
-      allButtonText: "ទាំងអស់",
-      resetButtonText: "សារដើម",
-      applyButtonText: "យល់ព្រម",
+    // ignore: use_build_context_synchronously
+    await showDialog(
       barrierDismissible: false,
-      hideSearchField: true,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0),
-      onApplyButtonClick: (list) async {
-        print("list $list");
-        selectedIndex.clear();
-        
-        for(var e in list!){
+      context: context, 
+      builder: (context){
+        return StatefulBuilder(
+          builder: (ctt, setstate){
+            return Dialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              backgroundColor: Colors.black54,
+              child: Stack(
+                children: [
 
-          selectedIndex.add({
-            "index": benefits!.indexOf(e),
-            "status": true
-          });
-        }
+                  Container(
+                    padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+                    height: MediaQuery.of(context).size.height / 1.8,
+                    child: ListView.builder(
+                      itemCount: benefits!.length,
+                      itemBuilder: (context, index){
+                        
+                        return Container(
+                          margin: EdgeInsets.only(
+                            right: 5, left: 5,
+                            top: index == 0 ? 20 : 5, 
+                            bottom: index == ( benefits!.length -1 ) ? 100 : 5
+                          ),
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: benefits![index].status == true 
+                            ? Color.fromARGB(255, 33, 33, 33)
+                            : event_crew.AppUtil.convertHexaColor("#254294").withOpacity(tmpBenefits![index].status == true ? 1.0 : 0.2),
+                            borderRadius: BorderRadius.circular(30)
+                          ),
+                          child: InkWell(
+                          onTap: benefits![index].status == true ? null : (){
 
-        await submitUpdate();
 
-      },
+                            if (tmpBenefits![index].status == false){
+
+                              selectedIndex.add({
+                                "index": index,
+                                "status": true
+                              });
+                            } else {
+
+                              // ignore: list_remove_unrelated_type
+                              List<Map<String, dynamic>> item = selectedIndex.where((element) => element['index'] == index ? true : false ).toList();
+                              selectedIndex.remove(item[0]);
+                            }
+                            tmpBenefits![index].status = !tmpBenefits![index].status!;
+                            setstate(() { });
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                              children: [
+
+                                Image.network(tmpBenefits![index].img!, width: 40, height: 40,),
+                                MyText(
+                                  left: 15,
+                                  text: tmpBenefits![index].name.toString(), 
+                                  fontWeight: FontWeight.w700, 
+                                  color2: Colors.white,
+                                  fontSize: 18,
+                                ),
+
+                                Expanded(child: Container()),
+                                benefits![index].status == true ? const Icon(Icons.check_rounded, color: Colors.green,) : Container()
+                              ]
+                            )
+                          ),
+                        );
+
+                      }
+                    )
+                  ),
+
+                  Positioned(
+                    left: 10, right: 10,
+                    bottom: 10,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: event_crew.AppUtil.convertHexaColor("#1a2d66")
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                  
+                          TextButton(
+                            onPressed: (){
+
+                              selectedIndex.clear();
+
+                              tmpBenefits = tmpBenefits!.map((e) {
+                                
+                                if (e.status == false){
+                                  e.status = true;
+                                  selectedIndex.add({
+                                    "index": tmpBenefits!.indexOf(e),
+                                    "status": true
+                                  });
+                                }
+                                return e;
+                              }).toList();
+                              
+                              print('selectedIndex $selectedIndex');
+
+                              // for (int i = 0; i < tmpBenefits!.length; i++ ) {
+                              //   selectedIndex.add({
+                              //     "index": i,
+                              //     "status": true
+                              //   });
+                              // }
+                              //   return e;
+                              // }).toList() as List<Map<String, dynamic>>;
+
+                              setstate(() {});
+                            }, 
+                            child: const MyText(text: "ទាំងអស់", color2: Colors.white,)
+                          ),
+                          const SizedBox(width: 10,),
+
+                          TextButton(
+                            onPressed: (){
+                              
+                              // ignore: unnecessary_cast
+                              selectedIndex.clear();
+                              tmpBenefits = tmpBenefits!.map((e) {
+                                e.status = false;
+                                return e;
+                              }).toList() ;
+
+                              setstate(() {});
+                            }, 
+                            child: const MyText(text: "សារដើម", color2: Colors.white,)
+                          ),
+                          SizedBox(width: 10,),
+                  
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(top: 5, bottom: 5, right: 5),
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))
+                                ),
+                                onPressed: () async {
+
+                                  print("selectedIndex $selectedIndex");  
+                                  // selectedIndex.clear();
+                                  
+                                  // for(var e in list!){
+                                                      
+                                  //   selectedIndex.add({
+                                  //     "index": benefits!.indexOf(e),
+                                  //     "status": false
+                                  //   });
+                                  // }
+                                                      
+                                  await submitUpdate(); 
+                                }, 
+                                child: MyText(top: 15, bottom: 15, text: "យល់ព្រម", color2: Colors.white,)
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: IconButton(
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                      icon: CircleAvatar(
+                        backgroundColor: Colors.red[900]  ,
+                        child: Icon(
+                          Icons.close_rounded, 
+                          color: event_crew.AppUtil.convertHexaColor("#730202")
+                        ),
+                      ),
+                    )
+                  )
+                ],
+              ),
+            );
+          }
+        ); 
+      }
     );
+
   }
 
   Future<void> submitUpdate() async {
 
-    try {
+    print("selectedIndex $selectedIndex");
 
-      DialogCom().dialogLoading(context);
-
-      await PostRequest.claimBenefits(decode!['_id'], selectedIndex).then((value) async {
-        print("value ${value.body}");
-        if (value.statusCode == 200 && json.decode(value.body)['message'].toString().toLowerCase() == "updated successfully!") {
-
-          // Close Dialog
-          // ignore: use_build_context_synchronously
-          Navigator.pop(context);
-
-          await event_crew.DialogCom().successMsg(
-            context, json.decode(value.body)['message']
-          );
-
-          // ignore: use_build_context_synchronously
-          Navigator.pop(context);
-        } else {
-          throw Exception(json.decode(value.body));
-        }
-      });
-
-
-    } catch (e) {
-
-      // Close Dialog
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-
+    if (selectedIndex.isEmpty){
       await event_crew.DialogCom().errorMsg(
-        context, e.toString()
+        context, "មិនមានការកែប្រែ",
+        action2: Container(
+          width: MediaQuery.of(context).size.width,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              // backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(1)),
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+            ),
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            child: const MyText(text: "បិទ", top: 20, bottom: 20, color2: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+          ),
+        )
       );
+    } else {
+
+      try {
+
+        DialogCom().dialogLoading(context);
+
+        await PostRequest.claimBenefits(decode!['_id'], selectedIndex).then((value) async {
+          print("value ${value.body}");
+          if (value.statusCode == 200 && json.decode(value.body)['message'].toString().toLowerCase() == "updated successfully!") {
+
+            // Close Dialog
+            // ignore: use_build_context_synchronously
+            Navigator.pop(context);
+
+            await event_crew.DialogCom().successMsg(
+              context, json.decode(value.body)['message'],
+              action2: Container(
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    // backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(1)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+                  ),
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  child: const MyText(text: "បិទ", top: 20, bottom: 20, color2: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+              )
+            );
+
+            // ignore: use_build_context_synchronously
+            Navigator.pop(context);
+          } else {
+            throw Exception(json.decode(value.body));
+          }
+        });
+
+
+      } catch (e) {
+
+        // Close Dialog
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+
+        await event_crew.DialogCom().errorMsg(
+          context, e.toString(),
+          action2: Container(
+            width: MediaQuery.of(context).size.width,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                // backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(1)),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+              ),
+              onPressed: (){
+                Navigator.pop(context);
+              },
+              child: const MyText(text: "បិទ", top: 20, bottom: 20, color2: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+          )
+        );
+      }
     }
+
   }
 
   @override
   void initState() {
     initCamera();
+
+    Future.delayed(Duration(seconds: 1), (){ claimingDialog(Response("", 200)); });
     super.initState();
   }
 
@@ -329,7 +535,7 @@ class _MembershipState extends State<Membership> {
 
                   await GetRequest.claimBenefit( await (json.decode(capture.barcodes.first.rawValue!))['addr'] ).then((value) async {
                     
-                    print("value ${value.body}");
+                    // print("value ${value.body}");
                     await claimingDialog(value);
                     
                   });
