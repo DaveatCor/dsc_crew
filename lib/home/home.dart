@@ -3,6 +3,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:event_crew/event_crew.dart' as evtCrew;
 import 'package:filter_list/filter_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mdw_crew/backend/post_api.dart';
@@ -104,7 +105,14 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> saveCacheApi() async {
-    await StorageServices.removeKey('REGISTRAION');
+
+    await StorageServices.fetchData("dsc_api").then((value) async {
+      print("saveCacheApi value $value");
+      await StorageServices.clearStorage();
+
+      print("value['api'] ${value['api']}");
+      await StorageServices.storeApiFromGithub(value);
+    });
   }
 
   Color? color = Colors.green.withOpacity(0.3);

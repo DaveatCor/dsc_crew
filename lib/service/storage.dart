@@ -100,4 +100,14 @@ class StorageServices {
   //     return jsonDecode(value);
   //   }
   // }
+
+  static Future<void> storeApiFromGithub(Map<String, dynamic> value) async {
+    print("storeApiFromGithub value['api'] ${value['api']}");
+    await StorageServices.storeData(
+      {
+        "api": value['api']
+      }, 
+      'dsc_api'
+    );
+  }
 }

@@ -16,8 +16,13 @@ class PostRequest {
   static Map<String, dynamic>? _dscApi;
 
   static Future<_http.Response> login(final String email, final String password) async {
-  
-    _dscApi = await StorageServices.fetchData('dsc_api');
+    print("login $email $password");
+    await StorageServices.fetchData('dsc_api').then((value) {
+      print("value $value");
+      _dscApi = value;
+    });
+
+    print("_dscApi $_dscApi");
     
     _body = json.encode({
       "email": email,
@@ -116,7 +121,7 @@ class PostRequest {
 
       print("apiTest $apiTest");
 
-      if (apiTest != null){
+      if (apiTest['api_test'] != null){
         _api = apiTest["api_test"];
         print("dsc_api_test $_api");
       }

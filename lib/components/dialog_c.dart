@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mdw_crew/components/text_c.dart';
 import 'package:mdw_crew/tool/app_utils.dart';
+import 'package:event_crew/event_crew.dart' as event_crew;
 
 class DialogCom {
   
@@ -115,36 +116,55 @@ class DialogCom {
   }
 
   Widget _progress({bool isTicket = false, String? content}) {
-  return Material(
-    color: Colors.transparent,
-    child: Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
+    return Material(
+      color: Colors.transparent,
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
 
-            CircularProgressIndicator(
-              backgroundColor: Colors.transparent,
-              valueColor: AlwaysStoppedAnimation(
-                AppUtil.convertHexaColor("#34B768")
-              )
-            ),
-
-            if (content == null)
-            Container()
-            else
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0, top: 16.0),
-              child: MyText(
-                text: content, 
-                color2: Colors.black,
+              CircularProgressIndicator(
+                backgroundColor: Colors.transparent,
+                valueColor: AlwaysStoppedAnimation(
+                  AppUtil.convertHexaColor("#34B768")
+                )
               ),
-            ),
-          ],
-        )
-      ],
-    ),
-  );
-}
+
+              if (content == null)
+              Container()
+              else
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0, top: 16.0),
+                child: MyText(
+                  text: content, 
+                  color2: Colors.black,
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Future<Widget> errorMsgCustomButton(BuildContext context, String msg) async {
+    return await event_crew.DialogCom().errorMsg(
+      context, msg,
+      action2: Container(
+        width: MediaQuery.of(context).size.width,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            // backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(1)),
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+          ),
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          child: const MyText(text: "បិទ", top: 20, bottom: 20, color2: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+        ),
+      )
+    );
+  }
 }

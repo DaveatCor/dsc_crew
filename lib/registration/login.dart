@@ -112,6 +112,8 @@ class _LoginPageState extends State<LoginPage> {
 
     DialogCom().dialogLoading(context);
 
+    print("submitLogin");
+
     try {
       
       await PostRequest.login(_loginModel.email.text, _loginModel.pwd.text).then((value) async {
@@ -132,6 +134,7 @@ class _LoginPageState extends State<LoginPage> {
           // Close Dialog
           Navigator.pop(context);
           
+          // ignore: use_build_context_synchronously
           await DialogCom().dialogMessage(
             context, 
             title: Lottie.asset(
@@ -148,12 +151,13 @@ class _LoginPageState extends State<LoginPage> {
         else if (_loginModel.decode!.containsKey('token')) {
 
           print("_loginModel.decode!.containsKey('token') ${_loginModel.decode!.containsKey('token')}");
-          await queryDSCJSON();
+          await GetRequest().queryDSCJSON();
           await StorageServices.storeData((await json.decode(value.body))['token'], dotenv.get('REGISTRAION'));
 
+          // ignore: use_build_context_synchronously
           await Navigator.pushAndRemoveUntil(
             context,
-            Transition(child: Home()),
+            Transition(child: const Home()),
             (route) => false
           );
         }
@@ -189,37 +193,6 @@ class _LoginPageState extends State<LoginPage> {
 
     }
   }
-  
-  Future<void> queryDSCJSON() async {
-
-    await GetRequest.querydscApiJson().then((value) async {
-      print("querydscApiJson");
-      print("value ${value.body}");
-      await StorageServices.storeData(
-        {
-          "APII": (await json.decode(value.body))['APII']
-        }, 
-        'dsc_api'
-      );
-
-      await StorageServices.storeData(
-        {
-          "matches": (await json.decode(value.body))['matches']
-        }, 
-        'matches'
-      );
-
-      await StorageServices.storeData(
-        {
-          "admin_acc": (await json.decode(value.body))['admin_acc']
-        }, 
-        'admin_acc'
-      );
-
-      // Initialize Socket
-      // Provider.of<MDWSocketProvider>(context, listen: false).initSocket(json.decode(value.body)['ws']);
-    });
-  }
 
   void changeShow(bool? value){
 
@@ -246,23 +219,8 @@ class _LoginPageState extends State<LoginPage> {
       
     } else {
 
+      await GetRequest().queryDSCJSON().then((value) {
 
-      await GetRequest.querydscApiJson().then((value) async {
-        print("querydscApiJson");
-        print("value $value");
-        await StorageServices.storeData(
-          {
-            "APII": (await json.decode(value.body))['APII']
-          }, 
-          'dsc_api'
-        );
-
-        await StorageServices.storeData(
-          {
-            "admin_acc": (await json.decode(value.body))['admin_acc']
-          }, 
-          'admin_acc'
-        );
         _queryAcc();
 
         // Close Dialog Loading
@@ -276,9 +234,6 @@ class _LoginPageState extends State<LoginPage> {
           height:  70,
           animationDuration: Duration(milliseconds: 700),
         ).show(context);
-
-        // Initialize Socket
-        // Provider.of<MDWSocketProvider>(context, listen: false).initSocket(json.decode(value.body)['ws']);
       });
     }
   }

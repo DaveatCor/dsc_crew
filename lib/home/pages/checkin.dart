@@ -145,7 +145,20 @@ class _CheckInState extends State<CheckIn> {
 
       await evtCrew.DialogCom().errorMsg(
         context,
-        'Something when wrong'
+        'Something when wrong',
+        action2: Container(
+          width: MediaQuery.of(context).size.width,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              // backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(1)),
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+            ),
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            child: const MyText(text: "បិទ", top: 20, bottom: 20, color2: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+          ),
+        )
       );
 
       // DialogCom().dialogMessage(
@@ -191,7 +204,7 @@ class _CheckInState extends State<CheckIn> {
                     animatedTexts: [
                       
                       TypewriterAnimatedText(
-                        'ស្កេនសំបុត្រ', 
+                        'បញ្ជីការប្រកួត', 
                         textStyle: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold, ),
                         
                       ),
@@ -218,7 +231,7 @@ class _CheckInState extends State<CheckIn> {
 
                             Navigator.push(
                               context, 
-                              Transition(child: QrScanner(title: '${widget.tabType}', func: admissioinFunc, hallId: 'tga',), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
+                              Transition(child: QrScanner(title: '${widget.tabType}', func: admissioinFunc, hallId: 'tga', isBackBtn: true,), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
                             );
 
                           },
