@@ -205,7 +205,7 @@ class _CheckInState extends State<CheckIn> {
                       
                       TypewriterAnimatedText(
                         'បញ្ជីការប្រកួត', 
-                        textStyle: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold, ),
+                        textStyle: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold, ),
                         
                       ),
                       // MyText(text: widget.hallId == 'vga' ? provider.vga.checkIn.toString() : provider.tga.checkIn.toString(), color2: Colors.green, right: 10, fontWeight: FontWeight.bold, fontSize: 17,);

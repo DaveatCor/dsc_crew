@@ -136,82 +136,6 @@ class _MembershipState extends State<Membership> {
 
   Future<void> claimingDialog(Response value) async {
 
-//     Response value = Response(json.encode({
-// 	"_id": "64070a335ec86b0c9f28cbdd",
-// 	"userId": "63fef9817b8ae45c7d1261b8",
-// 	"membershipPackageId": "63db392708c7e10fced41aff",
-// 	"no": "751755",
-// 	"cardImage": "0xf78128b3687f05657C6c1E340ba14975253d8B66.png",
-// 	"claim_benefits": [
-// 		{
-// 			"name": "home_jersey",
-// 			"status": true,
-// 			"img": "https://gateway.kumandra.org/files/QmYjXfT57Xd52jdouP2Au992xZ2k6enBikLF1cWnk8ZnRk"
-// 		},
-// 		{
-// 			"name": "scarf",
-// 			"status": true,
-// 			"img": "https://gateway.kumandra.org/files/QmTjEVpMkyNtyjXs4o2WENiey1a69WvC4GS8KVHqcyaSrV"
-// 		},
-// 		{
-// 			"name": "suzuki_jaccs",
-// 			"status": true,
-// 			"img": "https://gateway.kumandra.org/files/QmfBZ1Shzd7ry3AuxUMjELcNRZkDQpkCb7BVNc1zDpLM4h"
-// 		},
-// 		{
-// 			"name": "brown",
-// 			"status": true,
-// 			"img": "https://gateway.kumandra.org/files/QmbX2De3uWaM1PtNpJijwzqqMee2ruc8tu1t3wqjMHDkPX"
-// 		},
-// 		{
-// 			"name": "the_ground_market",
-// 			"status": false,
-// 			"img": "https://gateway.kumandra.org/files/QmXx1SpyzvXhzBzzVjyMMfWiP2gjm65tWMUknBrqhXzwv4"
-// 		},
-// 		{
-// 			"name": "potato_cornor",
-// 			"status": true,
-// 			"img": "https://gateway.kumandra.org/files/QmQRyD4zq58WbYbufHmXkFzqctLni345worXhbkHcHKgfr"
-// 		},
-// 		{
-// 			"name": "metro",
-// 			"status": false,
-// 			"img": "https://gateway.kumandra.org/files/QmaJX93zWqmCgHBmc1utvp3ZqN6Zw9JAVZxJA27mrwjzYL"
-// 		},
-// 		{
-// 			"name": "amazon",
-// 			"status": false,
-// 			"img": "https://gateway.kumandra.org/files/QmSgKZS78RrspFz1tpok1rL5vxaeJNfC4M2thZoYL8bXMT"
-// 		},
-// 		{
-// 			"name": "cristal_chicken",
-// 			"status": true,
-// 			"img": "https://gateway.kumandra.org/files/QmPW5nAbuF7GR65Tsfxg8btpdDBwjS82irRCNVTpAzGfET"
-// 		},
-// 		{
-// 			"name": "dek_cha",
-// 			"status": false,
-// 			"img": "https://gateway.kumandra.org/files/QmQ3ckcY44gDcuCShuikWn3vREWhSVyF71t9MAfmcKqjds"
-// 		},
-// 		{
-// 			"name": "ten11_zando",
-// 			"status": false,
-// 			"img": "https://gateway.kumandra.org/files/Qmb3vGbfmRbqkVqpDyLrzuVt64HV1hYjMiprNbbDwLXDdw"
-// 		}
-// 	],
-// 	"isGift": false,
-// 	"createdAt": "2023-03-07T09:56:03.597Z",
-// 	"updatedAt": "2023-03-07T16:45:40.909Z",
-// 	"__v": 0,
-// 	"id": "64070a335ec86b0c9f28cbdd"
-// }), 200);
-
-    // Response value = await GetRequest.claimBenefit("0xf78128b3687f05657C6c1E340ba14975253d8B66");
-
-    print("value.body ${value.body}");
-
-    print("value.statusCode ${value.statusCode}");
-
     if (value.statusCode == 200){
 
       decode = json.decode(value.body);
@@ -219,9 +143,6 @@ class _MembershipState extends State<Membership> {
       benefits = Benefit().filter(List<Map<String, dynamic>>.from(decode!['claim_benefits']));
 
       tmpBenefits = Benefit().filter(List<Map<String, dynamic>>.from(decode!['claim_benefits']));
-
-      // selectedItems =
-      // print(benefits!.where((element) => element.status == true ? true : false).toList());
 
       // ignore: use_build_context_synchronously
       await showDialog(
@@ -252,7 +173,7 @@ class _MembershipState extends State<Membership> {
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: benefits![index].status == true 
-                              ? Color.fromARGB(255, 33, 33, 33)
+                              ? const Color.fromARGB(255, 33, 33, 33)
                               : event_crew.AppUtil.convertHexaColor("#254294").withOpacity(tmpBenefits![index].status == true ? 1.0 : 0.2),
                               borderRadius: BorderRadius.circular(30)
                             ),
@@ -464,6 +385,7 @@ class _MembershipState extends State<Membership> {
             // ignore: use_build_context_synchronously
             Navigator.pop(context);
           } else {
+            
             throw Exception(json.decode(value.body));
           }
         });
@@ -486,7 +408,6 @@ class _MembershipState extends State<Membership> {
   void initState() {
     initCamera();
 
-    // Future.delayed(Duration(seconds: 1), (){ claimingDialog(Response("", 200)); });
     super.initState();
   }
 
@@ -506,27 +427,55 @@ class _MembershipState extends State<Membership> {
                 // startDelay: true,
                 controller: _controller,
                 errorBuilder: (context, error, child) {
-                  print("MobileScanner error $error");
                   return Container();//ScannerErrorWidget(error: error);
                 },
                 onDetect: (capture) async {
                   
                   DialogCom().dialogLoading(context);
+                  
                   await _controller.stop();
 
-                  print("capture.barcodes.first.rawValue! ${capture.barcodes.first.rawValue!}");
+                  try {
 
-                  // print("capture.barcodes.first.rawValue ${  }");
+                    decode = json.decode(capture.barcodes.first.rawValue!);
 
-                  await GetRequest.claimBenefit( await (json.decode(capture.barcodes.first.rawValue!))['addr'] ).then((value) async {
-                    
+                    // Scan Difference QR
+                    if (decode!.containsKey('type') && decode!.containsKey('addr')){
+
+                      // print("capture.barcodes.first.rawValue ${  }");
+
+                      await GetRequest.claimBenefit(decode!['addr']).then((value) async {
+                        
+                        // Close Dialog
+                        Navigator.pop(context);
+
+                        // print("value ${value.body}");
+                        await claimingDialog(value);
+                        
+                      });
+                    } else {
+
+                      // Close Dialog
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
+
+                      // ignore: use_build_context_synchronously
+                      await DialogCom().errorMsgCustomButton(
+                        context, 
+                        "QR របស់កាតសមាជិកមិនត្រឹមត្រូវ"
+                      );
+                    }
+                  } catch (e) {
+
                     // Close Dialog
                     Navigator.pop(context);
 
-                    // print("value ${value.body}");
-                    await claimingDialog(value);
-                    
-                  });
+                    // ignore: use_build_context_synchronously
+                    await DialogCom().errorMsgCustomButton(
+                      context, 
+                      "Something wrong $e"
+                    );
+                  }
 
                   await _controller.start();
                   // setState(() {

@@ -67,6 +67,7 @@ class QrScannerState extends State<QrScanner> {
   // }
   
   Future<void> qrData(String data) async {
+
     print("qrData function ${data.contains('qrcode')}");
     DialogCom().dialogLoading(context);
     
@@ -184,34 +185,40 @@ class QrScannerState extends State<QrScanner> {
 
                   SafeArea(
                     child: Container(
-                      height: 80,
+                      width: MediaQuery.of(context).size.width,
                       padding: const EdgeInsets.only(left: 20, top: 20),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                      child: widget.isBackBtn! ? IconButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: (){
+                          Navigator.pop(context);
+                        },
+                        icon: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
 
-                          widget.isBackBtn! ? IconButton(
-                            onPressed: (){
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
-                          ) : Container(),
-                          
-                          AnimatedTextKit(
-                            // pause: Duration(milliseconds: 300),
-                            repeatForever: true,
-                            animatedTexts: [
-                              
-                              TypewriterAnimatedText(
-                                'ស្កេនសំបុត្រ', 
-                                textStyle: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold, ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 5, right: 10),
+                              child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
+                            ),
+                            
+                            AnimatedTextKit(
+                              // pause: Duration(milliseconds: 300),
+                              repeatForever: true,
+                              animatedTexts: [
                                 
-                              ),
-                              // MyText(text: widget.hallId == 'vga' ? provider.vga.checkIn.toString() : provider.tga.checkIn.toString(), color2: Colors.green, right: 10, fontWeight: FontWeight.bold, fontSize: 17,);
-                            ],
-                          ),
-                        ],
-                      ),
+                                TypewriterAnimatedText(
+                                  'ស្កេនសំបុត្រ', 
+                                  textStyle: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold, ),
+                                  
+                                ),
+                                // MyText(text: widget.hallId == 'vga' ? provider.vga.checkIn.toString() : provider.tga.checkIn.toString(), color2: Colors.green, right: 10, fontWeight: FontWeight.bold, fontSize: 17,);
+                              ],
+                            ),
+                          ],
+                        ),
+                      ) : Container(),
+                      
                     ),
                   ),
 

@@ -18,7 +18,6 @@ class GetRequest {
   }
 
   static Future<_http.Response> claimBenefit(String addr) async {
-  print("claimBenefit $addr");
     // print("dotenv.get('DSC_URI') ${dotenv.get('DSC_URI')}");
     // String _api = dotenv.get('DSC_URI');
 
