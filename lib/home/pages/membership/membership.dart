@@ -45,70 +45,65 @@ class _MembershipState extends State<Membership> {
 
   bool? _isSuccess = false;
 
-  final MobileScannerController _controller = MobileScannerController();
+  // MobileScannerController _controller = MobileScannerController(autoStart: true);
 
-  Future<bool> redeem(String eventId, String data) async {
+  Future<bool> redeem(String data) async {
 
     _isSuccess = false;
 
     try {
 
-      await PostRequest.addmissionFunc(qrcodeData: data).then((value) async {
+      DialogCom().dialogLoading(context);
 
-        if ( ((await json.decode(value.body))['status']).toString().toUpperCase() == 'SUCCESS'){
+      try {
 
-          _isSuccess = false;
+        decode = json.decode(data);
 
-          SoundUtil.soundAndVibrate('mixkit-confirmation-tone-2867.wav');
+        // Scan Difference QR
+        if (decode!.containsKey('type') && decode!.containsKey('addr')){
 
-          // Provider.of<MDWSocketProvider>(context, listen: false).emitSocket('check-in', {'hallId': "vga"});
+          // print("capture.barcodes.first.rawValue ${  }");
 
-          // ignore: use_build_context_synchronously
-          await DialogCom().dialogMessageNoClose(
-            context,
-            title: ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: SizedBox(
-                width: 30,
-                child: Lottie.asset(
-                  "assets/animation/successful.json",
-                  repeat: true,
-                  reverse: true,
-                  height: 100
-                ),
-              ),
-            ), 
-            action: Container(
-              width: MediaQuery.of(context).size.width,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  // backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(1)),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
-                ),
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                child: const MyText(text: "បិទ", top: 20, bottom: 20, color2: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
-              ),
-            ),
-            content: MyText(text: json.decode(value.body)['message'], fontWeight: FontWeight.w500, left: 10, right: 10, bottom: 10,)
+          await GetRequest.claimBenefit(decode!['addr']).then((value) async {
             
-          );
+            // Close Dialog
+            Navigator.pop(context);
 
-        }
-        // Invalid QR 
-        else {
-          
+            // print("value ${value.body}");
+            await claimingDialog(value);
+            
+          });
+        } else {
+
           SoundUtil.soundAndVibrate('mixkit-tech-break-fail-2947.wav');
+
+          // Close Dialog
           // ignore: use_build_context_synchronously
-          await event_crew.DialogCom().errorMsg(
-            context,
-            json.decode(value.body)['message']
+          Navigator.pop(context);
+
+          // ignore: use_build_context_synchronously
+          await DialogCom().errorMsgCustomButton(
+            context, 
+            "QR របស់កាតសមាជិកមិនត្រឹមត្រូវ"
           );
 
+          // await _controller.start();
         }
-        
-      });
+      } catch (e) {
+
+        SoundUtil.soundAndVibrate('mixkit-tech-break-fail-2947.wav');
+
+        // Close Dialog
+        Navigator.pop(context);
+
+        // ignore: use_build_context_synchronously
+        await DialogCom().errorMsgCustomButton(
+          context, 
+          "Something wrong $e"
+        );
+
+        // await _controller.start();
+      }
 
       return _isSuccess!;
 
@@ -116,22 +111,13 @@ class _MembershipState extends State<Membership> {
 
       SoundUtil.soundAndVibrate('mixkit-tech-break-fail-2947.wav');
 
-      await event_crew.DialogCom().errorMsg(
+      await DialogCom().errorMsgCustomButton(
         context,
         'Something when wrong'
       );
 
       return _isSuccess!;
     }
-  }
-
-  initCamera() async {
-
-    await _controller.stop();
-    // if (_controller.isStarting == false){
-
-      setState(() {});
-    // }
   }
 
   Future<void> claimingDialog(Response value) async {
@@ -148,6 +134,7 @@ class _MembershipState extends State<Membership> {
       await showDialog(
         barrierDismissible: false,
         context: context, 
+        barrierColor: Colors.black26,
         builder: (context){
           return StatefulBuilder(
             builder: (ctt, setstate){
@@ -180,7 +167,6 @@ class _MembershipState extends State<Membership> {
                             child: InkWell(
                             onTap: benefits![index].status == true ? null : (){
 
-
                               if (tmpBenefits![index].status == false){
 
                                 selectedIndex.add({
@@ -195,6 +181,7 @@ class _MembershipState extends State<Membership> {
                               }
                               tmpBenefits![index].status = !tmpBenefits![index].status!;
                               setstate(() { });
+
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -249,17 +236,6 @@ class _MembershipState extends State<Membership> {
                                   }
                                   return e;
                                 }).toList();
-                                
-                                print('selectedIndex $selectedIndex');
-
-                                // for (int i = 0; i < tmpBenefits!.length; i++ ) {
-                                //   selectedIndex.add({
-                                //     "index": i,
-                                //     "status": true
-                                //   });
-                                // }
-                                //   return e;
-                                // }).toList() as List<Map<String, dynamic>>;
 
                                 setstate(() {});
                               }, 
@@ -273,7 +249,9 @@ class _MembershipState extends State<Membership> {
                                 // ignore: unnecessary_cast
                                 selectedIndex.clear();
                                 tmpBenefits = tmpBenefits!.map((e) {
-                                  e.status = false;
+                                  if (benefits![benefits!.indexOf(e)].status != true){
+                                    e.status = false;
+                                  }
                                   return e;
                                 }).toList() ;
 
@@ -291,19 +269,10 @@ class _MembershipState extends State<Membership> {
                                     shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))
                                   ),
                                   onPressed: () async {
-
-                                    print("selectedIndex $selectedIndex");  
-                                    // selectedIndex.clear();
-                                    
-                                    // for(var e in list!){
-                                                        
-                                    //   selectedIndex.add({
-                                    //     "index": benefits!.indexOf(e),
-                                    //     "status": false
-                                    //   });
-                                    // }
                                                         
                                     await submitUpdate(); 
+
+                                    SoundUtil.soundAndVibrate('mixkit-confirmation-tone-2867.wav');
                                   }, 
                                   child: MyText(top: 15, bottom: 15, text: "យល់ព្រម", color2: Colors.white,)
                                 ),
@@ -345,8 +314,6 @@ class _MembershipState extends State<Membership> {
   }
 
   Future<void> submitUpdate() async {
-
-    print("selectedIndex $selectedIndex");
 
     if (selectedIndex.isEmpty){
 
@@ -406,110 +373,129 @@ class _MembershipState extends State<Membership> {
 
   @override
   void initState() {
-    initCamera();
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DSCSocketProvider>(
-      builder: (context, provider, widgets) {
-        return Container(
-          color: Colors.green.withOpacity(0.15),
-          // padding: const EdgeInsets.all(20),
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Stack(
-            children: [
+    return QrScanner(title: 'ស្កេនកាតសមាជិក', func: redeem);
+    // Consumer<DSCSocketProvider>(
+    //   builder: (context, provider, widgets) {
+    //     return Container(
+    //       color: Colors.green.withOpacity(0.15),
+    //       // padding: const EdgeInsets.all(20),
+    //       height: MediaQuery.of(context).size.height,
+    //       width: MediaQuery.of(context).size.width,
+    //       child: Stack(
+    //         children: [
 
-              MobileScanner(
-                // startDelay: true,
-                controller: _controller,
-                errorBuilder: (context, error, child) {
-                  return Container();//ScannerErrorWidget(error: error);
-                },
-                onDetect: (capture) async {
+    //           MobileScanner(
+    //             // startDelay: true,
+    //             // controller: _controller,
+    //             controller: MobileScannerController(
+    //               facing: CameraFacing.back,
+    //             ),
+    //             errorBuilder: (context, error, child) {
+    //               print("errorBuilder $error");
+    //               return Container();//ScannerErrorWidget(error: error);
+    //             },
+    //             onScannerStarted: (arg){
+    //               // print("onScannerStarted _controller.events!.isPaused ${_controller.events!.isPaused}");
+    //             },
+    //             onDetect: (capture) async {
                   
-                  DialogCom().dialogLoading(context);
+    //               print("onDetect onDetect");
+    //               DialogCom().dialogLoading(context);
+
+    //               // print("before onDetect _controller.events!.isPaused ${_controller.events!.isPaused}");
                   
-                  await _controller.stop();
+    //               // await _controller.stop();
+    //               // _controller.events!.pause();//_controller.stop();
 
-                  try {
+    //               // print("onDetect _controller.events!.isPaused ${_controller.events!.isPaused}");
 
-                    decode = json.decode(capture.barcodes.first.rawValue!);
+    //               try {
 
-                    // Scan Difference QR
-                    if (decode!.containsKey('type') && decode!.containsKey('addr')){
+    //                 decode = json.decode(capture.barcodes.first.rawValue!);
 
-                      // print("capture.barcodes.first.rawValue ${  }");
+    //                 // Scan Difference QR
+    //                 if (decode!.containsKey('type') && decode!.containsKey('addr')){
 
-                      await GetRequest.claimBenefit(decode!['addr']).then((value) async {
+    //                   // print("capture.barcodes.first.rawValue ${  }");
+
+    //                   await GetRequest.claimBenefit(decode!['addr']).then((value) async {
                         
-                        // Close Dialog
-                        Navigator.pop(context);
+    //                     // Close Dialog
+    //                     Navigator.pop(context);
 
-                        // print("value ${value.body}");
-                        await claimingDialog(value);
+    //                     // print("value ${value.body}");
+    //                     await claimingDialog(value);
+
+    //                     // Reset Decode Variable
+    //                     decode = null;
+
+    //                     // await _controller.start();
                         
-                      });
-                    } else {
+    //                   });
+    //                 } else {
 
-                      // Close Dialog
-                      // ignore: use_build_context_synchronously
-                      Navigator.pop(context);
+    //                   // Close Dialog
+    //                   // ignore: use_build_context_synchronously
+    //                   Navigator.pop(context);
 
-                      // ignore: use_build_context_synchronously
-                      await DialogCom().errorMsgCustomButton(
-                        context, 
-                        "QR របស់កាតសមាជិកមិនត្រឹមត្រូវ"
-                      );
-                    }
-                  } catch (e) {
+    //                   // ignore: use_build_context_synchronously
+    //                   await DialogCom().errorMsgCustomButton(
+    //                     context, 
+    //                     "QR របស់កាតសមាជិកមិនត្រឹមត្រូវ"
+    //                   );
 
-                    // Close Dialog
-                    Navigator.pop(context);
+    //                   // await _controller.start();
+    //                 }
+    //               } catch (e) {
 
-                    // ignore: use_build_context_synchronously
-                    await DialogCom().errorMsgCustomButton(
-                      context, 
-                      "Something wrong $e"
-                    );
-                  }
+    //                 // Close Dialog
+    //                 Navigator.pop(context);
 
-                  await _controller.start();
-                  // setState(() {
-                  //   this.capture = capture;
-                  // });
-                },
-              ),
+    //                 // ignore: use_build_context_synchronously
+    //                 await DialogCom().errorMsgCustomButton(
+    //                   context, 
+    //                   "Something wrong $e"
+    //                 );
 
-              Container(
-                height: 80,
-                padding: const EdgeInsets.only(left: 20, top: 20),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: AnimatedTextKit(
-                    // pause: Duration(milliseconds: 300),
-                    repeatForever: true,
-                    animatedTexts: [
+    //                 // await _controller.start();
+    //               }
+    //               // setState(() {
+    //               //   this.capture = capture;
+    //               // });
+    //             },
+    //           ),
+
+    //           Container(
+    //             height: 80,
+    //             padding: const EdgeInsets.only(left: 20, top: 20),
+    //             child: Align(
+    //               alignment: Alignment.topLeft,
+    //               child: AnimatedTextKit(
+    //                 // pause: Duration(milliseconds: 300),
+    //                 repeatForever: true,
+    //                 animatedTexts: [
                       
-                      TypewriterAnimatedText(
-                        'ស្កេនកាតសមាជិក', 
-                        textStyle: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold, ),
+    //                   TypewriterAnimatedText(
+    //                     'ស្កេនកាតសមាជិក', 
+    //                     textStyle: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold, ),
                         
-                      ),
-                      // MyText(text: widget.hallId == 'vga' ? provider.vga.checkIn.toString() : provider.tga.checkIn.toString(), color2: Colors.green, right: 10, fontWeight: FontWeight.bold, fontSize: 17,);
-                    ],
-                  ),
-                ),
-              ),
+    //                   ),
+    //                   // MyText(text: widget.hallId == 'vga' ? provider.vga.checkIn.toString() : provider.tga.checkIn.toString(), color2: Colors.green, right: 10, fontWeight: FontWeight.bold, fontSize: 17,);
+    //                 ],
+    //               ),
+    //             ),
+    //           ),
               
-            ],
-          ),
-          // QrScanner(title: '', func: redeem),
-        );
-      }
-    );
+    //         ],
+    //       ),
+    //       // QrScanner(title: '', func: redeem),
+    //     );
+    //   }
+    // );
   }
 }

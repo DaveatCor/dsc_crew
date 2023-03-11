@@ -62,7 +62,7 @@ class _CheckInState extends State<CheckIn> {
     setState(() { });
   }
 
-  Future<bool> admissioinFunc(String eventId, String data) async {
+  Future<bool> admissioinFunc(String data) async {
     _isSuccess = false;
 
     try {
@@ -231,7 +231,7 @@ class _CheckInState extends State<CheckIn> {
 
                             Navigator.push(
                               context, 
-                              Transition(child: QrScanner(title: '${widget.tabType}', func: admissioinFunc, hallId: 'tga', isBackBtn: true,), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
+                              Transition(child: QrScanner(title: 'ស្កេនសំបុត្រ', func: admissioinFunc, hallId: 'tga', isBackBtn: true,), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
                             );
 
                           },

@@ -7,6 +7,7 @@ import 'package:mdw_crew/backend/get_api.dart';
 import 'package:mdw_crew/components/dialog_c.dart';
 import 'package:mdw_crew/components/text_c.dart';
 import 'package:mdw_crew/provider/mdw_socket_p.dart';
+import 'package:mdw_crew/tool/sound.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -38,45 +39,56 @@ class QrScannerState extends State<QrScanner> {
 
   final GlobalKey qrKey = GlobalKey();
   
-  // QRViewController? _qrViewController;
+  QRViewController? _qrViewController;
 
-  final MobileScannerController _controller = MobileScannerController();
+  // final MobileScannerController _controller = MobileScannerController();
 
-  // Future? _onQrViewCreated(QRViewController controller) async {
+  Future? _onQrViewCreated(QRViewController controller) async {
 
-  //   _qrViewController = controller;
-  //   _qrViewController!.resumeCamera();
-  //   try {
+    _qrViewController = controller;
+    _qrViewController!.resumeCamera();
+    try {
 
-  //     _qrViewController!.scannedDataStream.listen((event) async {
-  //       _qrViewController!.pauseCamera();
+      _qrViewController!.scannedDataStream.listen((event) async {
+        _qrViewController!.pauseCamera();
 
-  //       // Navigator.pop(context, event.code);
+        // Navigator.pop(context, event.code);
 
-  //       await qrData(event.code!);
+        await qrData(event.code!);
 
-  //     });
+      });
 
-  //   } catch (e) {
-  //     if (kDebugMode) {
-  //       print("qr create $e");
-  //     }
-  //   }
+    } catch (e) {
+      if (kDebugMode) {
+        print("qr create $e");
+      }
+    }
 
-  //   return _qrViewController!;
-  // }
+    return _qrViewController!;
+  }
   
   Future<void> qrData(String data) async {
 
-    print("qrData function ${data.contains('qrcode')}");
-    DialogCom().dialogLoading(context);
-    
-    await widget.func!('', data);
-    
-    // await _qrViewController!.resumeCamera();
-    
-    // Close Dialog Loading
-    Navigator.pop(context);
+    try {
+
+      DialogCom().dialogLoading(context);
+      
+      await widget.func!(data);
+      
+      await _qrViewController!.resumeCamera();
+      
+      // Close Dialog Loading
+      Navigator.pop(context);
+      
+    } catch (e) {
+      
+      // SoundUtil.soundAndVibrate(SOUND);
+
+      // Close Dialog Loading
+      Navigator.pop(context);
+
+      await DialogCom().errorMsgCustomButton(context, "Something wrong");
+    }
 
   }
 
@@ -159,37 +171,50 @@ class QrScannerState extends State<QrScanner> {
               child: Stack(
                 children: [
 
-                  MobileScanner(
-                    // startDelay: true,
-                    controller: _controller,
-                    errorBuilder: (context, error, child) {
-                      print("MobileScanner error $error");
-                      return Container();//ScannerErrorWidget(error: error);
+                  QRView(
+                    key: qrKey,
+                    onQRViewCreated: (QRViewController qrView) async {
+                      await _onQrViewCreated(qrView);
                     },
-                    onDetect: (capture) async {
-
-                      await _controller.stop();
-
-                      print("capture.barcodes.first.rawValue! ${capture.barcodes.first.rawValue!}");
-
-                      // print("capture.barcodes.first.rawValue ${  }");
-
-                      await qrData(capture.barcodes.first.rawValue!);
-
-                      await _controller.start();
-                      // setState(() {
-                      //   this.capture = capture;
-                      // });
-                    },
+                    overlay: QrScannerOverlayShape(
+                      borderColor: Colors.white,
+                      borderRadius: 10,
+                      borderWidth: 5,
+                      borderLength: 50,
+                    ),
                   ),
+
+                  // MobileScanner(
+                  //   // startDelay: true,
+                  //   controller: _controller,
+                  //   errorBuilder: (context, error, child) {
+                  //     print("MobileScanner error $error");
+                  //     return Container();//ScannerErrorWidget(error: error);
+                  //   },
+                  //   onDetect: (capture) async {
+
+                  //     await _controller.stop();
+
+                  //     print("capture.barcodes.first.rawValue! ${capture.barcodes.first.rawValue!}");
+
+                  //     // print("capture.barcodes.first.rawValue ${  }");
+
+                  //     await qrData(capture.barcodes.first.rawValue!);
+
+                  //     await _controller.start();
+                  //     // setState(() {
+                  //     //   this.capture = capture;
+                  //     // });
+                  //   },
+                  // ),
 
                   SafeArea(
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       padding: const EdgeInsets.only(left: 20, top: 20),
-                      child: widget.isBackBtn! ? IconButton(
+                      child: IconButton(
                         padding: EdgeInsets.zero,
-                        onPressed: (){
+                        onPressed: !(widget.isBackBtn!) ? null : (){
                           Navigator.pop(context);
                         },
                         icon: Row(
@@ -197,10 +222,10 @@ class QrScannerState extends State<QrScanner> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
 
-                            Padding(
+                            widget.isBackBtn! ? Padding(
                               padding: EdgeInsets.only(top: 5, right: 10),
                               child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
-                            ),
+                            ) : Container(),
                             
                             AnimatedTextKit(
                               // pause: Duration(milliseconds: 300),
@@ -208,7 +233,7 @@ class QrScannerState extends State<QrScanner> {
                               animatedTexts: [
                                 
                                 TypewriterAnimatedText(
-                                  'ស្កេនសំបុត្រ', 
+                                  widget.title!, 
                                   textStyle: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold, ),
                                   
                                 ),
@@ -217,7 +242,7 @@ class QrScannerState extends State<QrScanner> {
                             ),
                           ],
                         ),
-                      ) : Container(),
+                      ),
                       
                     ),
                   ),
@@ -235,18 +260,6 @@ class QrScannerState extends State<QrScanner> {
                   //     // });
                   //   },
                   // )
-                  // QRView(
-                  //   key: qrKey,
-                  //   onQRViewCreated: (QRViewController qrView) async {
-                  //     await _onQrViewCreated(qrView);
-                  //   },
-                  //   // overlay: QrScannerOverlayShape(
-                  //   //   borderColor: Colors.white,
-                  //   //   borderRadius: 10,
-                  //   //   borderWidth: 5,
-                  //   //   borderLength: 50,
-                  //   // ),
-                  // ),
                 ]
               )
             ),
