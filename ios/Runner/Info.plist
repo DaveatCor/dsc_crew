@@ -36,9 +36,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Read QR Code of addresses.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Read QR Code of addresses from photos.</string>
+	<string>Scan QR code to redeem ticket.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

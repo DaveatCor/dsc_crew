@@ -10,6 +10,7 @@ import 'package:mdw_crew/backend/post_api.dart';
 import 'package:mdw_crew/components/text_c.dart';
 import 'package:mdw_crew/home/pages/checkin.dart';
 import 'package:mdw_crew/home/pages/membership/membership.dart';
+import 'package:mdw_crew/home/pages/movie/bloc_movie.dart';
 import 'package:mdw_crew/model/benefit_m.dart';
 import 'package:mdw_crew/registration/login.dart';
 import 'package:mdw_crew/service/storage.dart';
@@ -37,8 +38,11 @@ class _HomeState extends State<Home> {
   void initState() {
 
     model.itemsList[1] = {
-      'asset': 'assets/icons/membership.png', 'name': "Membership"
+      'asset': 'assets/icons/membership.png', 'name': "Membership",
     };
+    model.itemsList.insert(2, {
+      "asset": "assets/icons/movie.png", "name": "Movie",
+    });
 
     controller.addListener(() {
       setState(() {
@@ -139,7 +143,8 @@ class _HomeState extends State<Home> {
           children: [
             // Check(tabType: 'Check',),
             CheckIn(tabType: 'Check In'),
-            const Membership()
+            const Membership(),
+            const MovieTicket()
             // const CheckOut(),
           ],
         ),
@@ -151,7 +156,6 @@ class _HomeState extends State<Home> {
         itemsList: model.itemsList,
         active: active,
         onTap: (value) async {
-          print("value $value botoom");
 
           if (value == 0){
 
@@ -168,7 +172,16 @@ class _HomeState extends State<Home> {
             color = Colors.red.withOpacity(0.3);
             setState(() { });
 
-          } else if (value == 2) {
+          } else if (value == 2){
+
+            controller.animateToPage(value, duration: const Duration(milliseconds: 300), curve: Curves.easeOutExpo);
+            active = controller.page!.toInt();
+            
+            color = Colors.red.withOpacity(0.3);
+            setState(() { });
+
+          }
+          else if (value == model.itemsList.length -1 ) {
 
             await logoutMsg();
 
