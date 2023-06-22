@@ -37,13 +37,12 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
 
-    model.itemsList[1] = {
-      'asset': 'assets/icons/membership.png', 'name': "Membership",
-    };
-    model.itemsList.insert(2, {
-      "asset": "assets/icons/movie.png", "name": "Movie",
-    });
-
+    model.itemsList = [
+      {'asset': 'packages/event_crew/assets/icons/admission.png', 'name': 'ការប្រកួត'},
+      {'asset': 'assets/icons/membership.png', 'name': "កាតសមាជិក"},
+      {"asset": "assets/icons/movie.png", "name": "សំបុត្រកុន",},
+      {'asset': 'packages/event_crew/assets/icons/logout.png', 'name': 'ចាកចេញ'}
+    ];
     controller.addListener(() {
       setState(() {
         
@@ -142,7 +141,7 @@ class _HomeState extends State<Home> {
           },
           children: [
             // Check(tabType: 'Check',),
-            CheckIn(tabType: 'Check In'),
+            CheckIn(),
             const Membership(),
             const MovieTicket()
             // const CheckOut(),

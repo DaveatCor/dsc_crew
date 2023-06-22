@@ -30,7 +30,6 @@ import 'package:vibration/vibration.dart';
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -54,30 +53,30 @@ class _LoginPageState extends State<LoginPage> {
     _loginModel.email.text = "crew@gmail.com";
     _loginModel.pwd.text = "domreychey168@@";
 
-    _queryAcc();
+    // _queryAcc();
 
     super.initState();
   }
 
-  void _queryAcc() async {
+  // void _queryAcc() async {
 
-    await StorageServices.fetchData("admin_acc").then((value) {
+  //   await StorageServices.fetchData("admin_acc").then((value) {
 
-      if (value != null){
+  //     if (value != null){
 
-        if (value['admin_acc'].containsKey("email") && value['admin_acc'].containsKey("password") ){
+  //       if (value['admin_acc'].containsKey("email") && value['admin_acc'].containsKey("password") ){
           
-          _loginModel.email.text = value['admin_acc']['email'];
-          _loginModel.pwd.text = value['admin_acc']['password'];
-        }
-        //  else {
-        //   _loginModel.email.clear();
-        //   _loginModel.pwd.clear();
-        // }
-        if (mounted) setState(() { });
-      }
-    });
-  }
+  //         _loginModel.email.text = value['admin_acc']['email'];
+  //         _loginModel.pwd.text = value['admin_acc']['password'];
+  //       }
+  //       //  else {
+  //       //   _loginModel.email.clear();
+  //       //   _loginModel.pwd.clear();
+  //       // }
+  //       if (mounted) setState(() { });
+  //     }
+  //   });
+  // }
 
   String onSubmit(String value){
     submitLogin();
@@ -205,37 +204,37 @@ class _LoginPageState extends State<LoginPage> {
 
     DialogCom().dialogLoading(context);
     
-    if (index == 0){
+    // if (index == 0){
 
-      // version = (await PackageInfo.fromPlatform()).version;
+    //   // version = (await PackageInfo.fromPlatform()).version;
 
-      // // Close Dialog Loading
-      // Navigator.pop(context);
+    //   // // Close Dialog Loading
+    //   // Navigator.pop(context);
 
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => AppUpdate(appVer: version))
-      // );
+    //   // Navigator.push(
+    //   //   context,
+    //   //   MaterialPageRoute(builder: (context) => AppUpdate(appVer: version))
+    //   // );
       
-    } else {
+    // } else {
 
-      await GetRequest().queryDSCJSON().then((value) {
+    //   await GetRequest().queryDSCJSON().then((value) {
 
-        _queryAcc();
+    //     _queryAcc();
 
-        // Close Dialog Loading
-        Navigator.pop(context);
+    //     // Close Dialog Loading
+    //     Navigator.pop(context);
 
-        MotionToast.success(
-          animationType: AnimationType.fromLeft,
-          position: MotionToastPosition.top,
-          description:  MyText(text: "Reload completed"),
-          width:  250,
-          height:  70,
-          animationDuration: Duration(milliseconds: 700),
-        ).show(context);
-      });
-    }
+    //     MotionToast.success(
+    //       animationType: AnimationType.fromLeft,
+    //       position: MotionToastPosition.top,
+    //       description:  MyText(text: "Reload completed"),
+    //       width:  250,
+    //       height:  70,
+    //       animationDuration: Duration(milliseconds: 700),
+    //     ).show(context);
+    //   });
+    // }
   }
   
   @override
@@ -243,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: SafeArea(
             child: Stack(
@@ -252,21 +251,21 @@ class _LoginPageState extends State<LoginPage> {
                 Align(
                   alignment: Alignment.topRight,
                   child: Container(
-                    margin: EdgeInsets.only(right: 20, top: 15),
+                    margin: const EdgeInsets.only(right: 20, top: 15),
                     height: 30,
                     child: DropdownButton(
                       underline: Container(),
-                      icon: Icon(Icons.settings),
-                      items: [
+                      icon: const Icon(Icons.settings),
+                      items: const [
 
-                        DropdownMenuItem(
-                          child: MyText(text: "Check update",),
-                          value: 0,
-                        ),
+                        // DropdownMenuItem(
+                        //   value: 0,
+                        //   child: MyText(text: "អាប់ឌែតការប្រកួត",),
+                        // ),
                          
                         DropdownMenuItem(
-                          child: MyText(text: "Reload cache",),
                           value: 1,
+                          child: MyText(text: "Reload cache",),
                         )
                       ],
                       onChanged: onChanged,
@@ -280,11 +279,11 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
 
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 30),
+                      padding: const EdgeInsets.symmetric(vertical: 30),
                       child: Image.asset("assets/logos/isi-dsc-logo.png", width: 120,),
                     ),
                     
-                    MyText(
+                    const MyText(
                       text: "LOGIN WITH YOUR EMAIL",
                       bottom: 30,
                       fontSize: 20,
@@ -307,7 +306,7 @@ class _LoginPageState extends State<LoginPage> {
                       pBottom: 30,
                       obcureText: !(_loginModel.isShow!),
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.remove_red_eye_outlined),
+                        icon: const Icon(Icons.remove_red_eye_outlined),
                         onPressed: (){
                           changeShow(!(_loginModel.isShow!));
                         },

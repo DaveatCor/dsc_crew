@@ -198,7 +198,7 @@ SPEC CHECKSUMS:
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   Protobuf: 120350fc38646e2dedc26f49ecba778184ea1de2
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
-  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
+  shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   vibration: 7d883d141656a1c1a6d8d238616b2042a51a1241
 

@@ -33,9 +33,8 @@ import 'package:event_crew/event_crew.dart' as evtCrew;
 class CheckIn extends StatefulWidget {
 
   final PageController? pageController;
-  final String? tabType;
 
-  CheckIn({super.key, this.pageController, required this.tabType});
+  CheckIn({super.key, this.pageController});
 
   @override
   State<CheckIn> createState() => _CheckInState();
@@ -93,6 +92,7 @@ class _CheckInState extends State<CheckIn> {
               ),
             ), 
             action: Container(
+              // ignore: use_build_context_synchronously
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 style: ButtonStyle(
@@ -118,12 +118,13 @@ class _CheckInState extends State<CheckIn> {
           await evtCrew.DialogCom().errorMsg(
             context,
             json.decode(value.body)['message'],
-            action2: Container(
+            action2: SizedBox(
+              // ignore: use_build_context_synchronously
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 style: ButtonStyle(
                   // backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(1)),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+                  shape: MaterialStateProperty.all(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
                 ),
                 onPressed: (){
                   Navigator.pop(context);
@@ -146,12 +147,12 @@ class _CheckInState extends State<CheckIn> {
       await evtCrew.DialogCom().errorMsg(
         context,
         'Something when wrong',
-        action2: Container(
+        action2: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: ElevatedButton(
             style: ButtonStyle(
               // backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(1)),
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+              shape: MaterialStateProperty.all(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
             ),
             onPressed: (){
               Navigator.pop(context);
@@ -194,26 +195,65 @@ class _CheckInState extends State<CheckIn> {
         
             children: [
 
-              Align(
-                alignment: Alignment.topLeft,
-                child: SizedBox(
-                  height: 80,
-                  child: AnimatedTextKit(
-                    // pause: Duration(milliseconds: 300),
-                    repeatForever: true,
-                    animatedTexts: [
-                      
-                      TypewriterAnimatedText(
-                        'បញ្ជីការប្រកួត', 
-                        textStyle: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold, ),
-                        
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: SizedBox(
+                      height: 80,
+                      child: AnimatedTextKit(
+                        // pause: Duration(milliseconds: 300),
+                        repeatForever: true,
+                        animatedTexts: [
+                          
+                          TypewriterAnimatedText(
+                            'បញ្ជីការប្រកួត', 
+                            textStyle: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold, ),
+                            
+                          ),
+                          // MyText(text: widget.hallId == 'vga' ? provider.vga.checkIn.toString() : provider.tga.checkIn.toString(), color2: Colors.green, right: 10, fontWeight: FontWeight.bold, fontSize: 17,);
+                        ],
+                        onTap: () {
+                        },
                       ),
-                      // MyText(text: widget.hallId == 'vga' ? provider.vga.checkIn.toString() : provider.tga.checkIn.toString(), color2: Colors.green, right: 10, fontWeight: FontWeight.bold, fontSize: 17,);
-                    ],
-                    onTap: () {
-                    },
+                    )
                   ),
-                )
+                  
+                  const Expanded(child: SizedBox()),
+
+                  IconButton(
+                    onPressed: () async {
+
+                      DialogCom().dialogLoading(context);
+
+                      await GetRequest.fetchMatchData().then((value) async {
+                        Map<String, dynamic> jsn = json.decode(value.body);
+                        print("Value ${value.body}");
+                        matches![0] = {
+                          "title": "${jsn['league']['name']} | ${jsn['week']} | AIA Stadium KMH Park",
+                          "first": jsn["home_team_logo"],
+                          "first_club_name": jsn['home_team_name'], 
+                          "second": jsn["away_team_logo"],
+                          "second_club_name": jsn["away_team_name"],
+                          "match_date": jsn['date'],
+                          "kick_off_time": jsn['ko']
+                        };
+
+                        await StorageServices.storeData(
+                          {
+                            "matches": matches!
+                          }, 
+                          'matches'
+                        );
+                        Navigator.pop(context);
+                        setState(() {});
+                      });
+                    }, 
+                    icon: const Icon(Icons.restore_rounded)
+                  )
+                ],
               ),
 
               Expanded(
@@ -231,7 +271,7 @@ class _CheckInState extends State<CheckIn> {
 
                             Navigator.push(
                               context, 
-                              Transition(child: QrScanner(title: 'ស្កេនសំបុត្រ', func: admissioinFunc, hallId: 'tga', isBackBtn: true,), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
+                              Transition(child: QrScanner(title: 'ស្កេនសំបុត្រ', func: admissioinFunc, hallId: '', isBackBtn: true,), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
                             );
 
                           },
