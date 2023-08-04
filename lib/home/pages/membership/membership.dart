@@ -45,51 +45,9 @@ class _MembershipState extends State<Membership> {
 
   bool? _isSuccess = false;
 
-  Map<String, dynamic> staticData = {
-    "isGift": false,
-    "_id": "63e4f4b0394b1df6219e1775",
-    "userId": "63e4e3fc394b1df6219e1501",
-    "membershipPackageId": "63db392708c7e10fced41afe",
-    "claim_benefits": [
-      {
-        "name": "metro",
-        "status": true,
-        "img": "https://gateway.kumandra.org/files/QmaJX93zWqmCgHBmc1utvp3ZqN6Zw9JAVZxJA27mrwjzYL"
-      },
-      {
-        "name": "brown",
-        "status": true,
-        "img": "https://gateway.kumandra.org/files/QmbX2De3uWaM1PtNpJijwzqqMee2ruc8tu1t3wqjMHDkPX"
-      },
-      {
-        "name": "the_ground_market",
-        "status": false,
-        "img": "https://gateway.kumandra.org/files/QmXx1SpyzvXhzBzzVjyMMfWiP2gjm65tWMUknBrqhXzwv4"
-      },
-      {
-        "name": "ten11_zando",
-        "status": true,
-        "img": "https://gateway.kumandra.org/files/Qmb3vGbfmRbqkVqpDyLrzuVt64HV1hYjMiprNbbDwLXDdw"
-      },
-      {
-        "name": "jersey",
-        "status": false,
-        "image": "jersey.png"
-      }
-    ],
-    "no": "999997",
-    "createdAt": "2023-02-09T13:27:12.103Z",
-    "updatedAt": "2023-08-04T02:16:06.554Z",
-    "__v": 0,
-    "cardImage": "0xD9708c09E95e710dbeDE6f3A467d67818BA45b43.png",
-    "id": "63e4f4b0394b1df6219e1775"
-  };
-
   // MobileScannerController _controller = MobileScannerController(autoStart: true);
 
   Future<bool> redeem(String data) async {
-
-    print("redeem data $data");
 
     _isSuccess = false;
 
@@ -163,8 +121,6 @@ class _MembershipState extends State<Membership> {
   }
 
   Future<void> claimingDialog(Response value) async {
-
-    await Future.delayed(Duration(seconds: 1), (){});
 
     if (value.statusCode == 200){
 
@@ -417,13 +373,12 @@ class _MembershipState extends State<Membership> {
 
   @override
   void initState() {
-    claimingDialog(Response(json.encode(staticData), 200));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container();//QrScanner(title: 'ស្កេនកាតសមាជិក', func: redeem);
+    return QrScanner(title: 'ស្កេនកាតសមាជិក', func: redeem);
     // Consumer<DSCSocketProvider>(
     //   builder: (context, provider, widgets) {
     //     return Container(
