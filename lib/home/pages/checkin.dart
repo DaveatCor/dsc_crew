@@ -186,6 +186,7 @@ class _CheckInState extends State<CheckIn> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Consumer<DSCSocketProvider>(
       builder: (context, provider, widgets) {
         return Container(

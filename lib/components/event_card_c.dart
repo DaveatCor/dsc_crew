@@ -28,109 +28,106 @@ class EventCardCom extends StatelessWidget {
 
           MyText(text: title, fontSize: 20, bottom: 20, fontWeight: FontWeight.w600,),
 
-          SizedBox(
-            height: 230,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
 
-                  Image.asset("assets/imgs/$img", fit: BoxFit.cover, width: MediaQuery.of(context).size.width, height: 230,),
+                Image.asset("assets/imgs/$img", fit: BoxFit.cover, width: MediaQuery.of(context).size.width),
 
-                  Container(
-                    height: 230,
-                    color: Colors.black.withOpacity(0.5),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
+                Container(
+                  // height: 230,
+                  color: Colors.black.withOpacity(0.5),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
 
-                        MyText(text: matchInfo!['match_date'], fontSize: 18, fontWeight: FontWeight.bold, color2: Colors.white,),
-                        
-                        // AnimatedTextKit(
-                        //   repeatForever: true,
-                        //   pause: const Duration(seconds: 1),
-                        //   animatedTexts: [
+                      MyText(text: matchInfo!['match_date'], fontSize: 18, fontWeight: FontWeight.bold, color2: Colors.white,),
+                      
+                      // AnimatedTextKit(
+                      //   repeatForever: true,
+                      //   pause: const Duration(seconds: 1),
+                      //   animatedTexts: [
 
-                        //     TypewriterAnimatedText(
-                        //       ,
-                        //       textAlign: TextAlign.center,
-                        //       textStyle: const TextStyle(
-                        //         fontWeight: FontWeight.bold, 
-                        //         color: Colors.white, 
-                        //         fontSize: 18
-                        //       ),
-                        //     ),
+                      //     TypewriterAnimatedText(
+                      //       ,
+                      //       textAlign: TextAlign.center,
+                      //       textStyle: const TextStyle(
+                      //         fontWeight: FontWeight.bold, 
+                      //         color: Colors.white, 
+                      //         fontSize: 18
+                      //       ),
+                      //     ),
 
-                        //   ],
-                        // ),
+                      //   ],
+                      // ),
 
-                        Container(
-                          margin: const EdgeInsets.only(top: 20),
-                          child: Row(
-                            children: [
-                              
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Image.network(matchInfo!['first']),
-                                          
-                                    MyText(top: 10, text: matchInfo!['first_club_name'], fontWeight: FontWeight.bold, color2: Colors.white,)
-                                  ],
-                                )
-                              ),
-                                          
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    
-                                    const MyText(text: 'KICK-OFF', fontWeight: FontWeight.bold, color2: Colors.white, fontSize: 22,),
+                      Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        child: Row(
+                          children: [
+                            
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Image.network(matchInfo!['first']),
+                                        
+                                  MyText(top: 10, text: matchInfo!['first_club_name'], fontWeight: FontWeight.bold, color2: Colors.white,)
+                                ],
+                              )
+                            ),
+                                        
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  
+                                  const MyText(text: 'KICK-OFF', fontWeight: FontWeight.bold, color2: Colors.white, fontSize: 22,),
 
-                                    SizedBox(
-                                      height: 50,
-                                      child: AnimatedTextKit(
-                                        repeatForever: true,
-                                        pause: const Duration(seconds: 1),
-                                        animatedTexts: [
+                                  SizedBox(
+                                    height: 50,
+                                    child: AnimatedTextKit(
+                                      repeatForever: true,
+                                      pause: const Duration(seconds: 1),
+                                      animatedTexts: [
 
-                                          FadeAnimatedText(
-                                            matchInfo!['kick_off_time'],
-                                            textAlign: TextAlign.center,
-                                            textStyle: const TextStyle(
-                                              fontWeight: FontWeight.bold, 
-                                              color: Colors.white, 
-                                              fontSize: 18,
-                                            ),
+                                        FadeAnimatedText(
+                                          matchInfo!['kick_off_time'],
+                                          textAlign: TextAlign.center,
+                                          textStyle: const TextStyle(
+                                            fontWeight: FontWeight.bold, 
+                                            color: Colors.white, 
+                                            fontSize: 18,
                                           ),
+                                        ),
 
-                                        ],
-                                      )  ,
-                                    ) 
-                                    // MyText(text: '15:45', fontWeight: FontWeight.bold, color2: Colors.white, fontSize: 22)
-                                  ],
-                                )
-                              ),
-                              
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Image.network(matchInfo!['second']),
-                                          
-                                    MyText(top: 10, text: matchInfo!['second_club_name'], fontWeight: FontWeight.bold, color2: Colors.white)
-                                  ],
-                                )
-                              ),
-                              
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                                      ],
+                                    )  ,
+                                  ) 
+                                  // MyText(text: '15:45', fontWeight: FontWeight.bold, color2: Colors.white, fontSize: 22)
+                                ],
+                              )
+                            ),
+                            
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Image.network(matchInfo!['second']),
+                                        
+                                  MyText(top: 10, text: matchInfo!['second_club_name'], fontWeight: FontWeight.bold, color2: Colors.white)
+                                ],
+                              )
+                            ),
+                            
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
             ),
           )
         ],
