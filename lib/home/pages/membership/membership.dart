@@ -47,6 +47,46 @@ class _MembershipState extends State<Membership> {
 
   // MobileScannerController _controller = MobileScannerController(autoStart: true);
 
+//   Map staticData = {
+// 	"isGift": false,
+// 	"_id": "63e4f4b0394b1df6219e1775",
+// 	"userId": "63e4e3fc394b1df6219e1501",
+// 	"membershipPackageId": "63db392708c7e10fced41afe",
+// 	"claim_benefits": [
+// 		{
+// 			"name": "metro",
+// 			"status": true,
+// 			"img": "https://gateway.kumandra.org/files/QmaJX93zWqmCgHBmc1utvp3ZqN6Zw9JAVZxJA27mrwjzYL"
+// 		},
+// 		{
+// 			"name": "brown",
+// 			"status": true,
+// 			"img": "https://gateway.kumandra.org/files/QmbX2De3uWaM1PtNpJijwzqqMee2ruc8tu1t3wqjMHDkPX"
+// 		},
+// 		{
+// 			"name": "the_ground_market",
+// 			"status": false,
+// 			"img": "https://gateway.kumandra.org/files/QmXx1SpyzvXhzBzzVjyMMfWiP2gjm65tWMUknBrqhXzwv4"
+// 		},
+// 		{
+// 			"name": "ten11_zando",
+// 			"status": true,
+// 			"img": "https://gateway.kumandra.org/files/Qmb3vGbfmRbqkVqpDyLrzuVt64HV1hYjMiprNbbDwLXDdw"
+// 		},
+// 		{
+// 			"name": "jersey",
+// 			"status": false,
+// 			"image": "jersey.png"
+// 		}
+// 	],
+// 	"no": "999997",
+// 	"createdAt": "2023-02-09T13:27:12.103Z",
+// 	"updatedAt": "2023-08-04T02:16:06.554Z",
+// 	"__v": 0,
+// 	"cardImage": "0xD9708c09E95e710dbeDE6f3A467d67818BA45b43.png",
+// 	"id": "63e4f4b0394b1df6219e1775"
+// };
+
   Future<bool> redeem(String data) async {
 
     _isSuccess = false;
@@ -160,7 +200,7 @@ class _MembershipState extends State<Membership> {
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                             decoration: BoxDecoration(
                               color: benefits![index].status == true 
-                              ? const Color.fromARGB(255, 33, 33, 33)
+                              ? const Color.fromARGB(255, 59, 59, 59).withOpacity(0.5)
                               : event_crew.AppUtil.convertHexaColor("#254294").withOpacity(tmpBenefits![index].status == true ? 1.0 : 0.2),
                               borderRadius: BorderRadius.circular(30)
                             ),
@@ -192,7 +232,7 @@ class _MembershipState extends State<Membership> {
                                     left: 15,
                                     text: tmpBenefits![index].name.toString(), 
                                     fontWeight: FontWeight.w700, 
-                                    color2: Colors.white,
+                                    color2: benefits![index].status == false ? Colors.white : Colors.black87,
                                     fontSize: 18,
                                   ),
 
@@ -211,63 +251,86 @@ class _MembershipState extends State<Membership> {
                       left: 10, right: 10,
                       bottom: 10,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: event_crew.AppUtil.convertHexaColor("#1a2d66")
-                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                    
-                            TextButton(
-                              onPressed: (){
 
-                                selectedIndex.clear();
-
-                                tmpBenefits = tmpBenefits!.map((e) {
-                                  
-                                  if (e.status == false){
-                                    e.status = true;
-                                    selectedIndex.add({
-                                      "index": tmpBenefits!.indexOf(e),
-                                      "status": true
-                                    });
-                                  }
-                                  return e;
-                                }).toList();
-
-                                setstate(() {});
-                              }, 
-                              child: const MyText(text: "ទាំងអស់", color2: Colors.white,)
+                            Expanded(
+                              child: ElevatedButton(
+                                // style: ButtonStyle(
+                                //   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))
+                                // ),
+                                onPressed: () async {
+                                                      
+                                  selectedIndex.clear();
+                            
+                                  tmpBenefits = tmpBenefits!.map((e) {
+                                    
+                                    if (e.status == false){
+                                      e.status = true;
+                                      selectedIndex.add({
+                                        "index": tmpBenefits!.indexOf(e),
+                                        "status": true
+                                      });
+                                    }
+                                    return e;
+                                  }).toList();
+                            
+                                  setstate(() {});
+                                }, 
+                                child: const MyText(top: 15, bottom: 15, text: "ទាំងអស់", color2: Colors.white,)
+                              ),
                             ),
-                            const SizedBox(width: 10,),
-
-                            TextButton(
-                              onPressed: (){
-                                
-                                // ignore: unnecessary_cast
-                                selectedIndex.clear();
-                                tmpBenefits = tmpBenefits!.map((e) {
-                                  if (benefits![benefits!.indexOf(e)].status != true){
-                                    e.status = false;
-                                  }
-                                  return e;
-                                }).toList() ;
-
-                                setstate(() {});
-                              }, 
-                              child: const MyText(text: "សារដើម", color2: Colors.white,)
-                            ),
+                            
                             SizedBox(width: 10,),
+
+                            // Expanded(
+                            //   child: ElevatedButton(
+                            //     // style: ButtonStyle(
+                            //     //   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))
+                            //     // ),
+                            //     onPressed: selectedIndex.isEmpty ? null : () async {
+                                  
+                            //       // ignore: unnecessary_cast
+                            //       selectedIndex.clear();
+                            //       tmpBenefits!.map((e) {
+                            //         if (benefits![benefits!.indexOf(e)].status != true){
+                            //           e.status = false;
+                            //         }
+                            //         return e;
+                            //       }).toList() ;
+
+                            //       setstate(() {});
+                            //     }, 
+                            //     child: const MyText(top: 15, bottom: 15, text: "សារដើម", color2: Colors.white,)
+                            //   ),
+                            // ),
+
+                            // TextButton(
+                            //   onPressed: (){
+                                
+                            //     // ignore: unnecessary_cast
+                            //     selectedIndex.clear();
+                            //     tmpBenefits = tmpBenefits!.map((e) {
+                            //       if (benefits![benefits!.indexOf(e)].status != true){
+                            //         e.status = false;
+                            //       }
+                            //       return e;
+                            //     }).toList() ;
+
+                            //     setstate(() {});
+                            //   }, 
+                            //   child: const MyText(text: "សារដើម", color2: Colors.white,)
+                            // ),
+                            // SizedBox(width: 10,),
                     
                             Expanded(
                               child: Container(
-                                margin: EdgeInsets.only(top: 5, bottom: 5, right: 5),
+                                margin: EdgeInsets.only(top: 5, bottom: 5),
                                 child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))
-                                  ),
+                                  // style: ButtonStyle(
+                                  //   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))
+                                  // ),
                                   onPressed: () async {
                                                         
                                     await submitUpdate(); 
@@ -373,6 +436,7 @@ class _MembershipState extends State<Membership> {
 
   @override
   void initState() {
+    // claimingDialog(Response(json.encode(staticData), 200));
     super.initState();
   }
 
