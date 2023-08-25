@@ -9,6 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:mdw_crew/backend/post_api.dart';
 import 'package:mdw_crew/components/text_c.dart';
 import 'package:mdw_crew/home/pages/checkin.dart';
+import 'package:mdw_crew/home/pages/general/general.dart';
 import 'package:mdw_crew/home/pages/membership/membership.dart';
 import 'package:mdw_crew/home/pages/movie/bloc_movie.dart';
 import 'package:mdw_crew/model/benefit_m.dart';
@@ -40,7 +41,7 @@ class _HomeState extends State<Home> {
     model.itemsList = [
       {'asset': 'packages/event_crew/assets/icons/admission.png', 'name': 'ការប្រកួត'},
       {'asset': 'assets/icons/membership.png', 'name': "កាតសមាជិក"},
-      {"asset": "assets/icons/movie.png", "name": "សំបុត្រកុន",},
+      {"asset": "assets/icons/movie.png", "name": "ទូទៅ",},
       {'asset': 'packages/event_crew/assets/icons/logout.png', 'name': 'ចាកចេញ'}
     ];
     controller.addListener(() {
@@ -143,7 +144,7 @@ class _HomeState extends State<Home> {
             // Check(tabType: 'Check',),
             CheckIn(),
             const Membership(),
-            const MovieTicket()
+            const General()
             // const CheckOut(),
           ],
         ),

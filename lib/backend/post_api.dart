@@ -51,7 +51,7 @@ class PostRequest {
     });
 
     return await _http.post(
-      Uri.parse("${_dscApi!['MDW_API']}admissions/check"),
+      Uri.parse("${_dscApi['MDW_API']}admissions/check"),
       headers: conceteHeader(key: 'Authorization', value: _tk!['token']),
       body: _body
     );
@@ -145,6 +145,21 @@ class PostRequest {
       Uri.parse("${_api}movie_ticket/scan_ticket?ticketId=$code"),
       // headers: conceteHeader(key: 'Authorization', value: _tk!['token']),
       headers: conceteHeader(),
+    );
+  }
+
+
+  static Future<_http.Response> userAsset(String id) async {
+
+    _body = json.encode({
+      "id": id,
+    });
+
+    return await _http.post(
+      Uri.parse("${_dscApi["api"]}user/asset"),
+      // headers: conceteHeader(key: 'Authorization', value: _tk!['token']),
+      headers: conceteHeader(),
+      body: _body
     );
   }
 
