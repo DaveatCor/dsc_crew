@@ -1,14 +1,17 @@
-import 'package:mdw_crew/domain/usecase/login_uc_impl.dart';
 import 'package:mdw_crew/index.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
 
-  const LoginPage({super.key});
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     
     final LoginUcImpl loginUcImpl = LoginUcImpl();
+
+    loginUcImpl.setContext = context;
+
+    loginUcImpl.initState();
 
     loginUcImpl.cacheCheck();
 
@@ -89,7 +92,7 @@ class LoginPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15)))),
+                          shape: MaterialStateProperty.all(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15)))),
                         ),
                         onPressed: () async {
 

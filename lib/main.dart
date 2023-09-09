@@ -107,7 +107,7 @@ class _MyAppState extends State<MyApp> {
           color: AppUtil.convertHexaColor("#254294")
         )
       ),
-      home: const LoginPage(),
+      home: const LoginScreen(),
     );
   }
 }

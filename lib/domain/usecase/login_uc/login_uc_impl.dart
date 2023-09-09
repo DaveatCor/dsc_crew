@@ -1,6 +1,6 @@
 import 'package:mdw_crew/index.dart';
 
-class LoginUcImpl implements LoginUseCase {
+class LoginUcImpl implements LoginUsecase {
 
   BuildContext? context;
 
@@ -29,7 +29,7 @@ class LoginUcImpl implements LoginUseCase {
 
          Navigator.pushAndRemoveUntil(
           context!, 
-          Transition(child: const Home()), 
+          Transition(child: const HomeScreen()), 
           (route) => false
         );
 
@@ -112,7 +112,7 @@ class LoginUcImpl implements LoginUseCase {
           // ignore: use_build_context_synchronously
           await Navigator.pushAndRemoveUntil(
             context!,
-            Transition(child: const Home()),
+            Transition(child: const HomeScreen()),
             (route) => false
           );
         }

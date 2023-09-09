@@ -1,4 +1,4 @@
-abstract class LoginUseCase {
+abstract class LoginUsecase {
   
   void initState();
   void changeShow(bool? value);
@@ -7,4 +7,5 @@ abstract class LoginUseCase {
 
   Future<void> cacheCheck();
   Future<void> submitLogin();
+  
 }
