@@ -8,7 +8,7 @@ export 'package:mdw_crew/data/backend/backend.dart';
 export 'package:mdw_crew/data/backend/post_api.dart';
 export 'package:mdw_crew/data/backend/get_api.dart';
 
-export 'package:mdw_crew/service/storage.dart';
+export 'package:bitriel_package/secure_storage/secure_storage.dart';
 
 export 'package:mdw_crew/tool/app_utils.dart';
 
@@ -64,7 +64,7 @@ export 'package:vibration/vibration.dart';
 export 'package:mdw_crew/presentation/provider/mdw_socket_p.dart';
 export 'package:mdw_crew/presentation/provider/download_p.dart';
 export 'package:mdw_crew/tool/sound.dart';
-export 'package:mdw_crew/qr_scanner/qr_scanner.dart';
+export 'package:mdw_crew/presentation/widgets/qr_scanner.dart';
 
 export 'dart:isolate';
 export 'package:flutter_downloader/flutter_downloader.dart';

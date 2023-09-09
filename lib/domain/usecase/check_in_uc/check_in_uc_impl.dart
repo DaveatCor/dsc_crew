@@ -24,7 +24,7 @@ class CheckInUcImpl implements CheckInUsecase {
   @override
   Future<void> queryMatch() async {
 
-    matches!.value = List<Map<String, dynamic>>.from( (await StorageServices.fetchData('matches'))['matches']);
+    matches!.value = List<Map<String, dynamic>>.from( json.decode(await SecureStorage.readSecure('matches')!)['matches']);
 
   }
 
@@ -149,11 +149,11 @@ class CheckInUcImpl implements CheckInUsecase {
         "kick_off_time": jsn['ko']
       };
 
-      await StorageServices.storeData(
-        {
+      await SecureStorage.writeSecure(
+        'matches',
+        json.encode({
           "matches": matches!
-        }, 
-        'matches'
+        }), 
       );
       Navigator.pop(context!);
       

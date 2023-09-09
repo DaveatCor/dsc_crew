@@ -42,37 +42,37 @@ class _MyAppState extends State<MyApp> {
     GetRequest.querydscApiJson().then((value) async {
       
       // Query API from Github Host
-      await StorageServices.storeData(
-        {
+      await SecureStorage.writeSecure(
+        'dsc_api',
+        json.encode({
           "api": (await json.decode(value.body))["api"]
-        }, 
-        'dsc_api'
+        }), 
       );
 
       if ((await json.decode(value.body))["api_test"] != null){
 
-        await StorageServices.storeData(
-          {
+        await SecureStorage.writeSecure(
+          'dsc_api_test',
+          json.encode({
             "api_test": (await json.decode(value.body))["api_test"]
-          }, 
-          'dsc_api_test'
+          }), 
         );
       }
 
       /// Query Match Data
-      await StorageServices.storeData(
-        {
+      await SecureStorage.writeSecure(
+        'matches',
+        json.encode({
           "matches": (await json.decode(value.body))['matches']
-        }, 
-        'matches'
+        }), 
       );
       
       // Query Admin Account
-      await StorageServices.storeData(
-        {
+      await SecureStorage.writeSecure(
+        'admin_acc',
+        json.encode({
           "admin_acc": (await json.decode(value.body))['admin_acc']
-        }, 
-        'admin_acc'
+        }), 
       );
 
       // Initialize Socket

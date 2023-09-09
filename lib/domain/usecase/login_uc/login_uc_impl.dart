@@ -21,11 +21,11 @@ class LoginUcImpl implements LoginUsecase {
   @override
   Future<void> cacheCheck() async {
     
-    await StorageServices.fetchData(dotenv.get('REGISTRAION')).then((value) async {
+    await SecureStorage.readSecure(dotenv.get('REGISTRAION'))!.then((value) async {
 
       DialogCom().dialogLoading(context!);
  
-      if (value != null){
+      if (value.isNotEmpty){
 
          Navigator.pushAndRemoveUntil(
           context!, 
@@ -105,9 +105,8 @@ class LoginUcImpl implements LoginUsecase {
         // Successfully Login
         else if (loginModel.decode!.containsKey('token')) {
 
-          print("loginModel.decode!.containsKey('token') ${loginModel.decode!.containsKey('token')}");
           await GetRequest().queryDSCJSON();
-          await StorageServices.storeData((await json.decode(value.body))['token'], dotenv.get('REGISTRAION'));
+          await SecureStorage.writeSecure(dotenv.get('REGISTRAION'), json.encode((await json.decode(value.body))['token']));
 
           // ignore: use_build_context_synchronously
           await Navigator.pushAndRemoveUntil(

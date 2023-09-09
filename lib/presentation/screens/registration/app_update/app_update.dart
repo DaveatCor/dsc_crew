@@ -37,8 +37,8 @@ class _AppUpdateState extends State<AppUpdate> {
   }
 
   void statusChecker() async {
-    await StorageServices.fetchData(dotenv.get("DOWNLOAD_STATUS")).then((value) {
-      if (value != null){
+    await SecureStorage.readSecure(dotenv.get("DOWNLOAD_STATUS"))!.then((value) {
+      if (value.isNotEmpty){
         if (value == DLStatus.DOWNLOADING.toString()){
           _updateProvider!.isUpdate = true;
         } else if (value == DLStatus.DOWNLOADED.toString()){
@@ -62,12 +62,12 @@ class _AppUpdateState extends State<AppUpdate> {
   Future<void> checkUpdate() async {
 
     // Query and Get Data From Local Storage
-    await StorageServices.fetchData('dsc_api').then((value) async {
-      if (value != null){
+    await SecureStorage.readSecure('dsc_api')!.then((value) async {
+      if (value.isEmpty){
         
-        if (value['app_version'] != "v${widget.appVer}"){
+        if (json.decode(value)['app_version'] != "v${widget.appVer}"){
           
-          _updateProvider!.newVer = value['app_version'];
+          _updateProvider!.newVer = json.decode(value)['app_version'];
 
           _updateProvider!.msg[1] = "New version available ${_updateProvider!.newVer}";
 

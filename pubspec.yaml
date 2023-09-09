@@ -38,18 +38,25 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
 
   transition:
-  socket_io_client: ^2.0.0
-  flutter_ringtone_player: ^3.2.0
-  animated_text_kit: ^4.2.2
-  auth_buttons: ^3.0.0
-  google_sign_in: ^5.4.2
-  flutter_downloader: ^1.10.1
   app_installer:
-  package_info_plus: ^3.0.2
-  percent_indicator: ^4.2.2
-  dio: ^4.0.6
-  url_launcher: ^6.1.8
-  flutter_launcher_icons: ^0.11.0
+  intl:
+  socket_io_client:
+  flutter_ringtone_player:
+  animated_text_kit:
+  auth_buttons:
+  google_sign_in:
+  flutter_downloader:
+  package_info_plus:
+  percent_indicator:
+  dio:
+  url_launcher:
+  flutter_launcher_icons:
+  filter_list:
+  flutter_localization:
+
+  # mobile_scanner:
+  # flutter_localization: ^0.1.10
+
   event_crew:
     git: 
       url: https://github.com/selendra/event_crew_package.git
@@ -58,11 +65,6 @@ dependencies:
     git:
       url: git@github.com:DaveatCor/bitriel_package.git
       ref: main
-  # flutter_localization: ^0.1.10
-  intl:
-  # mobile_scanner:
-  filter_list: ^1.0.2
-  flutter_localization: ^0.1.11
 
 dependency_overrides:
   google_fonts: ^5.0.0

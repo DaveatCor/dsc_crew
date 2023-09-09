@@ -11,6 +11,8 @@ class HomeUcImpl implements HomeUsecase {
   
   ValueNotifier<int> active = ValueNotifier(0); 
 
+  Color? color = Colors.green.withOpacity(0.3);
+
   set setBuildContext(BuildContext ctx){
     context = ctx;
   }
@@ -126,14 +128,22 @@ class HomeUcImpl implements HomeUsecase {
   @override
   Future<void> saveCacheApi() async {
 
-    await StorageServices.fetchData("dsc_api").then((index) async {
+    await SecureStorage.readSecure("dsc_api")!.then((index) async {
 
-      await StorageServices.clearStorage();
+      await SecureStorage.clearAllSecure();
 
-      await StorageServices.storeApiFromGithub(index);
+      await storeApiFromGithub(json.decode(index));
     });
   }
 
-  Color? color = Colors.green.withOpacity(0.3);
+  Future<void> storeApiFromGithub(Map<String, dynamic> value) async {
+    print("storeApiFromGithub value['api'] ${value['api']}");
+    await SecureStorage.writeSecure(
+      'dsc_api',
+      json.encode({
+        "api": value['api']
+      }), 
+    );
+  }
   
 }

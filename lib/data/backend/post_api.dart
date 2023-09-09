@@ -15,7 +15,7 @@ class PostRequest {
 
   static Future<_http.Response> login(final String email, final String password) async {
     print("login $email $password");
-    // await StorageServices.fetchData('dsc_api').then((value) {
+    // json.decode(await SecureStorage.readSecure('dsc_api').then((value) !){
     //   print("value $value");
     //   _dscApi = value;
     // });
@@ -37,9 +37,9 @@ class PostRequest {
   // Check QR Valid Or Not
   static Future<_http.Response> checkFunc(final String eventId, final String qrcodeData) async {
     
-    _tk = await StorageServices.fetchData(dotenv.get('REGISTRAION'));
+    _tk = json.decode(await SecureStorage.readSecure(dotenv.get('REGISTRAION'))!);
     
-    // _dscApi = await StorageServices.fetchData('dsc_api');
+    // _dscApi = json.decode(await SecureStorage.readSecure('dsc_api')!);
     
     _body = json.encode({
       "eventId": '637ff7274903dd71e36fd4e5',//eventId,
@@ -57,10 +57,10 @@ class PostRequest {
   static Future<_http.Response> addmissionFunc({String? eventId, required String qrcodeData}) async {
     
     print("addmissionFunc backend $qrcodeData");
-    String tk = await StorageServices.fetchData(dotenv.get('REGISTRAION'));
+    String tk = json.decode(await SecureStorage.readSecure(dotenv.get('REGISTRAION'))!);
     print("_tk $tk");
 
-    // _dscApi = await StorageServices.fetchData('dsc_api');
+    // _dscApi = json.decode(await SecureStorage.readSecure('dsc_api')!);
 
     dynamic decode = json.decode(qrcodeData);
     
@@ -81,7 +81,7 @@ class PostRequest {
   // Check Out
   // static Future<_http.Response> checkOutFunc(final String eventId, final String qrcodeData) async {
     
-  //   _tk = await StorageServices.fetchData(dotenv.get('REGISTRAION'));
+  //   _tk = json.decode(await SecureStorage.readSecure(dotenv.get('REGISTRAION'))!);
 
   //   _body = json.encode({
   //     "eventId": eventId,
@@ -97,14 +97,14 @@ class PostRequest {
 
   // Check Out
   static Future<_http.Response> claimBenefits(final String id, List<Map<String, dynamic>> benefits) async {
-    // _tk = await StorageServices.fetchData(dotenv.get('REGISTRAION'));
+    // _tk = json.decode(await SecureStorage.readSecure(dotenv.get('REGISTRAION'))!);
 
-    // await StorageServices.fetchData("dsc_api").then((api) {
+    // json.decode(await SecureStorage.readSecure("dsc_api").then((api) !){
       
     //   _api = api["api"];
     // });
 
-    // await StorageServices.fetchData("dsc_api_test").then((apiTest) {
+    // json.decode(await SecureStorage.readSecure("dsc_api_test").then((apiTest) !){
 
     //   if (apiTest['api_test'] != null){
     //     _api = apiTest["api_test"];
@@ -126,12 +126,12 @@ class PostRequest {
 
   static Future<_http.Response> scanMovieTicket(String code) async {
     
-    // await StorageServices.fetchData("dsc_api").then((api) {
+    // json.decode(await SecureStorage.readSecure("dsc_api").then((api) !){
       
     //   _api = api["api"];
     // });
 
-    // await StorageServices.fetchData("dsc_api_test").then((apiTest) {
+    // json.decode(await SecureStorage.readSecure("dsc_api_test").then((apiTest) !){
 
     //   if (apiTest['api_test'] != null){
     //     _api = apiTest["api_test"];
