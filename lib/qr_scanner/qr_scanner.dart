@@ -1,15 +1,4 @@
-import 'dart:convert';
-
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:mdw_crew/backend/get_api.dart';
-import 'package:mdw_crew/components/dialog_c.dart';
-import 'package:mdw_crew/components/text_c.dart';
-import 'package:mdw_crew/provider/mdw_socket_p.dart';
-import 'package:mdw_crew/tool/sound.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:provider/provider.dart';
+import 'package:mdw_crew/index.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QrScanner extends StatefulWidget {

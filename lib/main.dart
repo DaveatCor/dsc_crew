@@ -1,19 +1,4 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:mdw_crew/backend/get_api.dart';
-import 'package:mdw_crew/provider/download_p.dart';
-import 'package:mdw_crew/provider/mdw_socket_p.dart';
-import 'package:mdw_crew/registration/login.dart';
-import 'package:mdw_crew/service/storage.dart';
-import 'package:mdw_crew/tool/app_utils.dart';
-import 'package:provider/provider.dart';
-import 'dart:isolate';
-import 'dart:ui';
-import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-
+import 'package:mdw_crew/index.dart';
 
 void main() async {
 
