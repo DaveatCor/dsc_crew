@@ -44,24 +44,6 @@ class EventCardCom extends StatelessWidget {
                     children: [
 
                       MyText(text: matchInfo!['match_date'], fontSize: 18, fontWeight: FontWeight.bold, color2: Colors.white,),
-                      
-                      // AnimatedTextKit(
-                      //   repeatForever: true,
-                      //   pause: const Duration(seconds: 1),
-                      //   animatedTexts: [
-
-                      //     TypewriterAnimatedText(
-                      //       ,
-                      //       textAlign: TextAlign.center,
-                      //       textStyle: const TextStyle(
-                      //         fontWeight: FontWeight.bold, 
-                      //         color: Colors.white, 
-                      //         fontSize: 18
-                      //       ),
-                      //     ),
-
-                      //   ],
-                      // ),
 
                       Container(
                         margin: const EdgeInsets.only(top: 20),

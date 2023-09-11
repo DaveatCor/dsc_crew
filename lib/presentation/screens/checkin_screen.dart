@@ -64,34 +64,62 @@ class CheckInScreen extends StatelessWidget {
               ),
 
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                child: Center(
+                  child: ValueListenableBuilder(
+                    valueListenable: checkInUcImpl.matches!,
+                    builder: (context, matches, child) {
+                
+                      return ListView(
+                        shrinkWrap: true,
+                        children: matches.map((e) {
+                          return EventCardCom(
+                            func: () async {
+                
+                              Navigator.push(
+                                context, 
+                                Transition(child: QrScanner(title: 'ស្កេនសំបុត្រ', func: checkInUcImpl.admissioinFunc, hallId: '', isBackBtn: true,), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
+                              );
+                
+                            },
+                            title: e['title'],
+                            qty: provider.tga.checkIn.toString(),
+                            img: 'Premium2.png',
+                            matchInfo: e
+                          );
+                        }).toList(),
+                      );
+                
+                    },
+                  ),
+                )
+                // Column(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
                     
-                    checkInUcImpl.matches != null ? ListView.builder(
-                      itemCount: checkInUcImpl.matches!.value.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index){
+                //     checkInUcImpl.matches != null ? ListView.builder(
+                //       itemCount: checkInUcImpl.matches!.value.length,
+                //       shrinkWrap: true,
+                //       itemBuilder: (context, index){
                         
-                        return EventCardCom(
-                          func: () async {
+                //         return EventCardCom(
+                //           func: () async {
 
-                            Navigator.push(
-                              context, 
-                              Transition(child: QrScanner(title: 'ស្កេនសំបុត្រ', func: checkInUcImpl.admissioinFunc, hallId: '', isBackBtn: true,), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
-                            );
+                //             Navigator.push(
+                //               context, 
+                //               Transition(child: QrScanner(title: 'ស្កេនសំបុត្រ', func: checkInUcImpl.admissioinFunc, hallId: '', isBackBtn: true,), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
+                //             );
 
-                          },
-                          title: checkInUcImpl.matches!.value[index]['title'],
-                          qty: provider.tga.checkIn.toString(),
-                          img: 'Premium2.png',
-                          matchInfo: checkInUcImpl.matches!.value[index]
-                        );
-                      }
-                    ) : Container(),
+                //           },
+                //           title: checkInUcImpl.matches!.value[index]['title'],
+                //           qty: provider.tga.checkIn.toString(),
+                //           img: 'Premium2.png',
+                //           matchInfo: checkInUcImpl.matches!.value[index]
+                //         );
+                //       }
+                //     ) : Container(),
 
-                  ],
-                ),
+                //   ],
+                // ),
               )
         
             ],

@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
             // Check(tabType: 'Check',),
             CheckInScreen(),
             MembershipScreen(),
-            General()
+            GeneralScreen()
             // const CheckOut(),
           ],
         ),

@@ -50,7 +50,7 @@ export 'package:mdw_crew/presentation/screens/registration/app_update/check_upda
 
 export 'package:mdw_crew/presentation/pages/movie/movie.dart';
 export 'package:mdw_crew/presentation/pages/checkout/count_checkout.dart';
-export 'package:mdw_crew/presentation/screens/general.dart';
+export 'package:mdw_crew/presentation/screens/general_screen.dart';
 export 'package:mdw_crew/presentation/screens/checkin_screen.dart';
 export 'package:mdw_crew/presentation/screens/membership_screen.dart';
 export 'package:mdw_crew/presentation/screens/home_screen.dart';

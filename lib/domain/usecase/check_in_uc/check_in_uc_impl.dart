@@ -23,9 +23,10 @@ class CheckInUcImpl implements CheckInUsecase {
 
   @override
   Future<void> queryMatch() async {
-
+    print("queryMatch");
     matches!.value = List<Map<String, dynamic>>.from( json.decode(await SecureStorage.readSecure('matches')!)['matches']);
-
+    print("matches!.value ${matches!.value}");
+    matches!.notifyListeners();
   }
 
   Future<bool> admissioinFunc(String data) async {
